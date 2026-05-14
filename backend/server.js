@@ -28,6 +28,7 @@ const allowedOrigins = [
   "https://grocery-admin.vercel.app",
   "https://grocery-two-ashen.vercel.app",
   "https://grocery-admin-seven-xi.vercel.app",
+  "https://grocery-admin-virid.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174"
 ].filter(Boolean);
