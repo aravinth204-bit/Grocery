@@ -238,7 +238,7 @@ const Orders = () => {
                 <div className="flex items-center gap-2">
                   {selectedOrder.invoiceUrl && (
                     <a 
-                      href={`http://localhost:5000${selectedOrder.invoiceUrl}`}
+                      href={`${import.meta.env.VITE_API_URL?.replace('/api', '') || 'https://grocery-z8ij.onrender.com'}${selectedOrder.invoiceUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="p-2 bg-primary/10 hover:bg-primary/20 rounded-xl text-primary flex items-center gap-2 transition-colors text-xs font-bold"

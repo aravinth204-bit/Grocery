@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import API from '../services/api';
 
 export const AuthContext = createContext();
 
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
       };
       // Uses the same login endpoint from backend
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password }, config);
+      const { data } = await API.post('/auth/login', { email, password }, config);
       
       if (data.user && data.user.role === 'admin') {
         setAdminInfo(data.user);
