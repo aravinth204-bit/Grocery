@@ -24,6 +24,8 @@ const httpServer = createServer(app);
 const allowedOrigins = [
   process.env.CLIENT_URL,
   process.env.ADMIN_URL,
+  "https://grocery-qcmn.vercel.app",
+  "https://grocery-admin.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174"
 ].filter(Boolean);
