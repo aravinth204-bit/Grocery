@@ -1,50 +1,74 @@
 import React from 'react';
-import { Menu, Search, Mail } from 'lucide-react';
+import { Menu, Search, Mail, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import NotificationDropdown from './NotificationDropdown';
+import { useTheme } from '../context/ThemeContext';
 
 const TopNav = ({ setSidebarOpen }) => {
+  const { isDarkMode, toggleTheme } = useTheme();
+
   return (
-    <header className="h-20 bg-dark-bg/50 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4 md:px-6 lg:px-8 z-[50]">
-      
-      <div className="flex items-center gap-4 flex-1">
-        <button 
+    <header className="h-24 bg-white/60 dark:bg-[#0f172a]/60 backdrop-blur-2xl border-b border-slate-100/50 dark:border-white/5 flex items-center justify-between px-6 md:px-10 z-[50] transition-all duration-300">
+
+      <div className="flex items-center gap-6 flex-1">
+        <motion.button
+          whileHover={{ scale: 1.1, backgroundColor: 'rgba(16, 185, 129, 0.1)', color: '#10b981' }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => setSidebarOpen(true)}
-          className="lg:hidden p-2 text-gray-400 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+          className="lg:hidden p-3 text-slate-500 dark:text-slate-400 rounded-2xl bg-slate-100 dark:bg-slate-800 transition-all border border-slate-200 dark:border-white/5"
         >
-          <Menu size={20} />
-        </button>
-        
-        <div className="hidden md:flex relative w-full max-w-md group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-primary transition-colors" size={18} />
-          <input 
-            type="text" 
-            placeholder="Search products, orders, or users..."
-            className="w-full bg-white/5 border border-white/5 rounded-full py-2.5 pl-12 pr-4 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary/50 focus:bg-white/10 transition-all placeholder:text-gray-500"
+          <Menu size={22} />
+        </motion.button>
+
+        <div className="hidden md:flex relative w-full max-w-lg group">
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 group-focus-within:text-primary transition-all duration-300" size={20} />
+          <input
+            type="text"
+            placeholder="Search dashboard elite..."
+            className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 rounded-2xl py-3.5 pl-14 pr-6 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400 shadow-sm"
           />
         </div>
       </div>
 
-      <div className="flex items-center gap-3 md:gap-4">
+      <div className="flex items-center gap-4 md:gap-6">
+        {/* Theme Toggle */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={toggleTheme}
+          className="p-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-white/5 rounded-2xl text-slate-500 dark:text-amber-400 transition-all shadow-sm"
+        >
+          {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+        </motion.button>
+
         {/* Messages */}
-        <button className="relative p-2 text-gray-400 hover:text-white rounded-full bg-white/5 hover:bg-white/10 transition-all group">
-          <Mail size={20} />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-secondary rounded-full border-2 border-dark-bg"></span>
-        </button>
+        <Link to="/support">
+          <motion.button 
+            whileHover={{ y: -2, backgroundColor: 'rgba(14, 165, 233, 0.1)', color: '#0ea5e9' }}
+            whileTap={{ scale: 0.95 }}
+            className="relative p-3 text-slate-500 dark:text-slate-400 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-white/5 transition-all group shadow-sm"
+          >
+            <Mail size={22} />
+          </motion.button>
+        </Link>
 
         {/* Notifications */}
         <NotificationDropdown />
 
         {/* Admin Profile Mini */}
-        <div className="hidden sm:flex items-center gap-3 pl-4 border-l border-white/5">
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="hidden sm:flex items-center gap-4 pl-6 border-l border-slate-100 dark:border-white/5 cursor-pointer group"
+        >
           <div className="text-right">
-            <p className="text-xs font-bold text-white leading-none">Super Admin</p>
-            <p className="text-[10px] font-medium text-gray-500 mt-1">Status: Online</p>
+            <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] leading-none mb-1.5">Premium Admin</p>
+            <p className="text-sm font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">Aravinth Thala</p>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 border border-primary/20 flex items-center justify-center text-primary font-black text-lg shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10 transition-all">
             A
           </div>
-        </div>
+        </motion.div>
       </div>
     </header>
   );

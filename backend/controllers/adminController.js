@@ -8,12 +8,57 @@ import Order from '../models/Order.js';
 export const getDashboardStats = async (req, res) => {
   try {
     const totalProducts = await Product.countDocuments();
-    const totalUsers = await User.countDocuments();
+    const totalUsers = await User.countDocuments({ role: 'user' });
     const totalOrders = await Order.countDocuments();
     
     // Calculate total revenue from all orders
     const orders = await Order.find({});
     const totalRevenue = orders.reduce((acc, order) => acc + (order.totalPrice || 0), 0);
+
+    // Calculate Monthly Revenue for Chart
+    const monthlyDataRaw = await Order.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          revenue: { $sum: "$totalPrice" }
+        }
+      },
+      { $sort: { "_id": 1 } }
+    ]);
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthlyData = monthlyDataRaw.map(item => ({
+      name: monthNames[item._id - 1],
+      revenue: item.revenue
+    }));
+
+    // Calculate Top Products based on order items
+    const topProductsRaw = await Order.aggregate([
+      { $unwind: "$orderItems" },
+      {
+        $group: {
+          _id: "$orderItems.product",
+          name: { $first: "$orderItems.name" },
+          image: { $first: "$orderItems.image" },
+          sales: { $sum: "$orderItems.qty" },
+          revenue: { $sum: { $multiply: ["$orderItems.qty", "$orderItems.price"] } }
+        }
+      },
+      { $sort: { sales: -1 } },
+      { $limit: 4 }
+    ]);
+
+    const topProducts = await Promise.all(topProductsRaw.map(async (p) => {
+      const product = await Product.findById(p._id);
+      return {
+        id: p._id,
+        name: p.name,
+        image: p.image,
+        sales: p.sales,
+        revenue: p.revenue,
+        stock: product ? (product.stock > 0 ? (product.stock < 10 ? 'Low Stock' : 'In Stock') : 'Out of Stock') : 'N/A'
+      };
+    }));
 
     // Get recent 5 orders for the table
     const recentOrders = await Order.find({})
@@ -28,7 +73,9 @@ export const getDashboardStats = async (req, res) => {
         totalUsers,
         totalOrders,
         totalRevenue,
-        recentOrders
+        recentOrders,
+        monthlyData,
+        topProducts
       }
     });
   } catch (error) {

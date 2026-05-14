@@ -11,6 +11,8 @@ import orderRoutes from './routes/orderRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import settingsRoutes from './routes/settingsRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
 
 // Load env vars
 dotenv.config();
@@ -30,7 +32,9 @@ const allowedOrigins = [
   "https://grocery-admin-seven-xi.vercel.app",
   "https://grocery-admin-virid.vercel.app",
   "http://localhost:5173",
-  "http://localhost:5174"
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "http://localhost:5176"
 ].filter(Boolean);
 
 const io = new Server(httpServer, {
@@ -74,6 +78,8 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/messages', messageRoutes);
 
 // Root route
 app.get('/', (req, res) => {

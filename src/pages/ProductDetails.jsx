@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Plus, Minus, ShoppingCart, Star, ArrowLeft, ShieldCheck, Truck, RefreshCw, Loader2, AlertTriangle } from 'lucide-react';
 import { fetchProductById, fetchProducts } from '../services/api';
+import { getImageUrl } from '../utils/imageUrl';
 import useCart from '../hooks/useCart';
 import { useToast } from '../context/ToastContext';
 import ProductCard from '../components/ProductCard';
@@ -83,13 +84,13 @@ const ProductDetails = () => {
     <div className="min-h-screen pt-32 pb-20 px-6 bg-dark-bg">
       <div className="container mx-auto max-w-6xl">
         
-        <button 
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group"
+        <Link 
+          to="/"
+          className="relative z-[20] inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all mb-10 group cursor-pointer backdrop-blur-sm"
         >
-          <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-          Back to browsing
-        </button>
+          <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm font-bold tracking-tight">Back to browsing</span>
+        </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-24">
           <motion.div 
@@ -97,7 +98,7 @@ const ProductDetails = () => {
             animate={{ opacity: 1, x: 0 }}
             className="relative rounded-[3rem] overflow-hidden bg-white/5 border border-white/5"
           >
-            <img src={product.image} alt={product.name} className="w-full aspect-square object-cover p-12" />
+            <img src={getImageUrl(product.image)} alt={product.name} className="w-full aspect-square object-cover p-12" />
             <div className="absolute top-6 left-6">
               <span className="bg-primary/20 backdrop-blur-md text-primary text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest border border-primary/20">
                 {product.category}

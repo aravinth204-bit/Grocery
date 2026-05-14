@@ -9,6 +9,13 @@ const API = axios.create({
   baseURL: getBaseURL(),
 });
 
+// Upload API
+export const uploadImage = (formData) => API.post('/upload', formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+});
+
 // Add token to requests
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('adminToken');
@@ -30,6 +37,7 @@ export const deleteProduct = (id) => API.delete(`/products/${id}`);
 
 // Orders API
 export const getOrders = () => API.get('/orders');
+export const getAnalytics = () => API.get('/orders/analytics');
 export const updateOrderStatus = (id, status) => API.put(`/orders/${id}/status`, { status });
 export const deleteOrder = (id) => API.delete(`/orders/${id}`);
 
@@ -41,5 +49,10 @@ export const updateSettings = (settings) => API.put('/settings', settings);
 export const getNotifications = () => API.get('/notifications');
 export const markNotificationRead = (id) => API.put(`/notifications/${id}/read`);
 export const markAllNotificationsRead = () => API.put('/notifications/read-all');
+
+// Messages API
+export const getMessages = () => API.get('/messages');
+export const updateMessageStatus = (id, status) => API.put(`/messages/${id}`, { status });
+export const deleteMessage = (id) => API.delete(`/messages/${id}`);
 
 export default API;

@@ -1,4 +1,6 @@
 import Order from '../models/Order.js';
+import User from '../models/User.js';
+import Product from '../models/Product.js';
 import Notification from '../models/Notification.js';
 import { sendOrderNotification } from '../utils/whatsappService.js';
 import { generateInvoice } from '../utils/invoiceGenerator.js';
@@ -159,6 +161,52 @@ export const deleteOrder = async (req, res) => {
     } else {
       res.status(404).json({ success: false, error: 'Order not found' });
     }
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+// @desc    Get dashboard analytics
+// @route   GET /api/orders/analytics
+// @access  Private/Admin
+export const getAnalytics = async (req, res) => {
+  try {
+    const orders = await Order.find({});
+    const totalSales = orders.reduce((acc, order) => acc + order.totalPrice, 0);
+    const totalOrders = orders.length;
+    const totalUsers = await User.countDocuments({ role: 'user' });
+    const totalProducts = await Product.countDocuments({});
+
+    // Calculate Monthly Revenue for Chart
+    const monthlyData = await Order.aggregate([
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          total: { $sum: "$totalPrice" }
+        }
+      },
+      { $sort: { "_id": 1 } }
+    ]);
+
+    // Map month numbers to names
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedMonthlyData = monthlyData.map(item => ({
+      name: monthNames[item._id - 1],
+      total: item.total
+    }));
+
+    res.status(200).json({
+      success: true,
+      data: {
+        stats: {
+          totalSales,
+          totalOrders,
+          totalUsers,
+          totalProducts
+        },
+        monthlyData: formattedMonthlyData
+      }
+    });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }

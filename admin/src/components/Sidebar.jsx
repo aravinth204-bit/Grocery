@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  LayoutDashboard, 
-  Package, 
-  ShoppingCart, 
-  Users, 
-  BarChart2, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  Users,
+  BarChart2,
+  Settings,
   LogOut,
-  Store
+  Store,
+  Bell
 } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -23,19 +24,20 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   };
 
   const navItems = [
-    { path: '/', name: 'Dashboard', icon: <LayoutDashboard size={20} /> },
-    { path: '/products', name: 'Products', icon: <Package size={20} /> },
-    { path: '/orders', name: 'Orders', icon: <ShoppingCart size={20} /> },
-    { path: '/customers', name: 'Customers', icon: <Users size={20} /> },
-    { path: '/analytics', name: 'Analytics', icon: <BarChart2 size={20} /> },
-    { path: '/settings', name: 'Settings', icon: <Settings size={20} /> },
+    { path: '/', name: 'Dashboard', icon: <LayoutDashboard size={20} />, color: 'text-emerald-500', bg: 'hover:bg-emerald-50' },
+    { path: '/products', name: 'Products', icon: <Package size={20} />, color: 'text-blue-500', bg: 'hover:bg-blue-50' },
+    { path: '/orders', name: 'Orders', icon: <ShoppingCart size={20} />, color: 'text-amber-500', bg: 'hover:bg-amber-50' },
+    { path: '/notifications', name: 'Notifications', icon: <Bell size={20} />, color: 'text-purple-500', bg: 'hover:bg-purple-50' },
+    { path: '/customers', name: 'Customers', icon: <Users size={20} />, color: 'text-pink-500', bg: 'hover:bg-pink-50' },
+    { path: '/analytics', name: 'Analytics', icon: <BarChart2 size={20} />, color: 'text-indigo-500', bg: 'hover:bg-indigo-50' },
+    { path: '/settings', name: 'Settings', icon: <Settings size={20} />, color: 'text-slate-600', bg: 'hover:bg-slate-100' },
   ];
 
   return (
     <>
       {/* Mobile Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
@@ -43,49 +45,53 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar Content */}
       <aside
-        className={`fixed lg:sticky top-0 left-0 h-screen w-[280px] bg-[#0a0a0a]/95 backdrop-blur-xl border-r border-white/5 z-50 flex flex-col transition-transform duration-300 shadow-2xl lg:shadow-none ${
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}
+        className={`fixed lg:sticky top-0 left-0 h-screen w-[280px] bg-slate-50/40 dark:bg-[#0f172a]/80 backdrop-blur-3xl border-r border-slate-200/60 dark:border-white/5 z-50 flex flex-col transition-all duration-500 shadow-[10px_0_40px_rgba(0,0,0,0.03)] ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          }`}
       >
         {/* Logo */}
-        <div className="p-8 pb-4">
-          <div className="flex items-center gap-3 text-white">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-              <Store size={22} className="text-dark-bg" />
-            </div>
+        <div className="p-10 pb-6">
+          <div className="flex items-center gap-4 text-slate-900 dark:text-slate-100 group cursor-pointer">
+            <motion.div 
+              whileHover={{ rotate: 12, scale: 1.1 }}
+              className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center shadow-lg shadow-primary/20 transition-all"
+            >
+              <Store size={24} className="text-white" />
+            </motion.div>
             <div>
-              <h1 className="text-xl font-black tracking-tight">FreshCart</h1>
-              <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Admin Portal</p>
+              <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-none">FreshCart</h1>
+              <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mt-1">Admin Elite</p>
             </div>
           </div>
         </div>
 
         {/* Navigation */}
-        <div className="flex-1 px-4 py-8 overflow-y-auto custom-scrollbar">
-          <p className="px-4 text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Menu</p>
-          <nav className="flex flex-col gap-2">
+        <div className="flex-1 px-6 py-4 overflow-y-auto custom-scrollbar">
+          <p className="px-4 text-[10px] font-black text-slate-300 dark:text-slate-600 uppercase tracking-[0.3em] mb-6">Main Dashboard</p>
+          <nav className="flex flex-col gap-3">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) => `
-                  relative flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-300 group
-                  ${isActive 
-                    ? 'text-white bg-white/10 shadow-lg border border-white/5' 
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'}
+                  relative flex items-center gap-4 px-5 py-3.5 rounded-2xl font-bold text-[13px] transition-all duration-300 group
+                  ${isActive
+                    ? `bg-white dark:bg-slate-800 shadow-[0_10px_25px_rgba(0,0,0,0.05)] border border-slate-100 dark:border-white/10 scale-[1.02] ${item.color}`
+                    : `text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white ${item.bg} dark:hover:bg-white/5`}
                 `}
               >
                 {({ isActive }) => (
                   <>
-                    <div className={`${isActive ? 'text-primary' : 'group-hover:text-primary transition-colors'}`}>
-                      {item.icon}
+                    <div className={`transition-all duration-300 ${isActive ? item.color : 'text-slate-300 dark:text-slate-600 group-hover:' + item.color}`}>
+                      {React.cloneElement(item.icon, { size: 20 })}
                     </div>
-                    <span>{item.name}</span>
+                    <span className={`tracking-tight transition-colors duration-300 ${isActive ? 'font-black' : 'font-bold'}`}>
+                      {item.name}
+                    </span>
                     {isActive && (
-                      <motion.div 
+                      <motion.div
                         layoutId="activeTab"
-                        className="absolute left-0 w-1 h-8 bg-primary rounded-r-full"
+                        className={`absolute left-0 w-1.5 h-6 rounded-r-full shadow-[2px_0_10px_rgba(0,0,0,0.1)] ${item.color.replace('text', 'bg')}`}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       />
                     )}
@@ -97,14 +103,16 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* User / Logout */}
-        <div className="p-4 border-t border-white/5">
-          <button 
+        <div className="p-6 border-t border-slate-50 dark:border-white/5 bg-slate-50/30 dark:bg-slate-900/50">
+          <motion.button
+            whileHover={{ backgroundColor: 'rgba(239, 68, 68, 0.05)', x: 5 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl font-bold text-sm text-red-500 hover:bg-red-500/10 transition-colors group"
+            className="flex items-center gap-4 w-full px-5 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-red-500 transition-all group"
           >
-            <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
-            Sign Out
-          </button>
+            <LogOut size={20} className="group-hover:rotate-12 transition-transform duration-300" />
+            Sign Out Portal
+          </motion.button>
         </div>
       </aside>
     </>

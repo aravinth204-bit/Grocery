@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './context/ToastContext';
 import { SearchProvider } from './context/SearchContext';
@@ -14,6 +15,39 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import OrderSuccess from './pages/OrderSuccess';
 import MyOrders from './pages/MyOrders';
+import Contact from './pages/Contact';
+
+import CustomCursor from './components/CustomCursor';
+
+const PageTransition = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+  >
+    {children}
+  </motion.div>
+);
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/cart" element={<PageTransition><Cart /></PageTransition>} />
+        <Route path="/product/:id" element={<PageTransition><ProductDetails /></PageTransition>} />
+        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+        <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+        <Route path="/checkout" element={<PageTransition><Checkout /></PageTransition>} />
+        <Route path="/order-success/:id" element={<PageTransition><OrderSuccess /></PageTransition>} />
+        <Route path="/my-orders" element={<PageTransition><MyOrders /></PageTransition>} />
+        <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 function App() {
   return (
@@ -23,19 +57,11 @@ function App() {
           <ToastProvider>
             <CartProvider>
               <Router>
-                <div className="min-h-screen bg-dark-bg text-white selection:bg-primary selection:text-white">
+                <CustomCursor />
+                <div className="min-h-screen bg-slate-50 mesh-gradient text-slate-900 selection:bg-primary/20 selection:text-primary">
                   <Navbar />
                   <main>
-                    <Routes>
-                      <Route path="/" element={<Home />} />
-                      <Route path="/cart" element={<Cart />} />
-                      <Route path="/product/:id" element={<ProductDetails />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/checkout" element={<Checkout />} />
-                      <Route path="/order-success/:id" element={<OrderSuccess />} />
-                      <Route path="/my-orders" element={<MyOrders />} />
-                    </Routes>
+                    <AnimatedRoutes />
                   </main>
                 </div>
               </Router>

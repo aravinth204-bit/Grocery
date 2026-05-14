@@ -17,7 +17,8 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { getSettings, updateSettings } from '../services/api';
+import { getSettings, updateSettings, uploadImage } from '../services/api';
+import { getImageUrl } from '../utils/imageUrl';
 
 const SettingsCard = ({ title, icon, children, delay = 0 }) => (
   <motion.div
@@ -30,7 +31,7 @@ const SettingsCard = ({ title, icon, children, delay = 0 }) => (
       <div className="p-3 bg-primary/10 rounded-2xl">
         {icon}
       </div>
-      <h2 className="text-xl font-bold text-white">{title}</h2>
+      <h2 className="text-xl font-bold text-slate-900">{title}</h2>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {children}
@@ -40,23 +41,23 @@ const SettingsCard = ({ title, icon, children, delay = 0 }) => (
 
 const InputGroup = ({ label, type = "text", placeholder, value, onChange, icon }) => (
   <div className="flex flex-col gap-2">
-    <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">{label}</label>
+    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">{label}</label>
     <div className="relative group">
-      {icon && <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-primary transition-colors">{icon}</div>}
+      {icon && <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">{icon}</div>}
       <input 
         type={type}
         value={value || ''}
         onChange={onChange}
         placeholder={placeholder}
-        className={`w-full bg-white/5 border border-white/10 rounded-xl py-3 ${icon ? 'pl-12' : 'px-4'} pr-4 text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-gray-600`}
+        className={`w-full bg-slate-100 border border-slate-200 rounded-xl py-3 ${icon ? 'pl-12' : 'px-4'} pr-4 text-slate-900 focus:outline-none focus:border-primary/50 focus:bg-white transition-all placeholder:text-slate-400`}
       />
     </div>
   </div>
 );
 
 const Toggle = ({ label, enabled, onToggle }) => (
-  <div className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-2xl">
-    <span className="text-sm font-medium text-gray-300">{label}</span>
+  <div className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-2xl">
+    <span className="text-sm font-medium text-slate-600">{label}</span>
     <button
       onClick={onToggle}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
@@ -75,6 +76,7 @@ const Toggle = ({ label, enabled, onToggle }) => (
 const Settings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploadingField, setUploadingField] = useState(null);
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
   
   const [settings, setSettings] = useState({
@@ -102,6 +104,32 @@ const Settings = () => {
       showToast('Failed to load settings', 'error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (e, section, field) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    setUploadingField(`${section}.${field}`);
+    try {
+      const { data } = await uploadImage(formData);
+      setSettings(prev => ({
+        ...prev,
+        [section]: {
+          ...prev[section],
+          [field]: data.image
+        }
+      }));
+      showToast('Image uploaded successfully');
+    } catch (error) {
+      console.error('Upload error:', error);
+      showToast('Failed to upload image', 'error');
+    } finally {
+      setUploadingField(null);
     }
   };
 
@@ -154,13 +182,13 @@ const Settings = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-black text-white mb-2">Settings</h1>
-          <p className="text-gray-400">Manage your store configuration, themes, and admin profile.</p>
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">Settings</h1>
+          <p className="text-slate-500">Manage your store configuration, themes, and admin profile.</p>
         </div>
         <button 
           onClick={handleSave}
           disabled={saving}
-          className="hidden md:flex items-center gap-2 bg-primary hover:bg-emerald-400 text-dark-bg font-bold px-8 py-3 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] disabled:opacity-50"
+          className="hidden md:flex items-center gap-2 bg-primary hover:bg-emerald-400 text-white font-bold px-8 py-3 rounded-xl transition-all shadow-[0_10px_20px_rgba(16,185,129,0.2)] disabled:opacity-50"
         >
           {saving ? <Loader2 size={20} className="animate-spin" /> : <Save size={20} />}
           Save Changes
@@ -179,13 +207,42 @@ const Settings = () => {
             <InputGroup label="Store Address" value={settings.storeInfo.address} onChange={(e) => setSettings({...settings, storeInfo: {...settings.storeInfo, address: e.target.value}})} />
           </div>
           <div className="md:col-span-2">
-            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 block">Store Logo URL</label>
-            <div className="flex items-center gap-6">
-              <div className="w-24 h-24 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary overflow-hidden">
-                {settings.storeInfo.logo ? <img src={settings.storeInfo.logo} className="w-full h-full object-cover" /> : <Store size={40} />}
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 block">Store Logo</label>
+            <div className="flex items-center gap-8">
+              <div className="relative group w-24 h-24">
+                <div className="w-24 h-24 rounded-3xl bg-slate-100 border border-slate-200 flex items-center justify-center text-primary overflow-hidden shadow-sm group-hover:shadow-md transition-all">
+                  {settings.storeInfo.logo ? (
+                    <img src={getImageUrl(settings.storeInfo.logo)} className="w-full h-full object-cover" />
+                  ) : (
+                    <Store size={32} className="text-slate-300" />
+                  )}
+                  {uploadingField === 'storeInfo.logo' && (
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                      <Loader2 size={24} className="text-primary animate-spin" />
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="flex-1">
-                <InputGroup placeholder="Paste Image URL here..." value={settings.storeInfo.logo} onChange={(e) => setSettings({...settings, storeInfo: {...settings.storeInfo, logo: e.target.value}})} />
+              <div className="flex flex-col gap-3 flex-1">
+                <div className="relative group max-w-xs">
+                  <input 
+                    type="file" 
+                    id="logo-upload"
+                    className="hidden"
+                    onChange={(e) => handleImageUpload(e, 'storeInfo', 'logo')}
+                    accept="image/*"
+                  />
+                  <label 
+                    htmlFor="logo-upload"
+                    className="flex items-center justify-center gap-3 w-full bg-slate-100 border-2 border-dashed border-slate-200 hover:border-primary/50 hover:bg-primary/5 rounded-2xl px-6 py-3 cursor-pointer transition-all"
+                  >
+                    <Upload size={18} className="text-slate-400 group-hover:text-primary" />
+                    <span className="text-xs font-black uppercase tracking-widest text-slate-500 group-hover:text-primary">
+                      {settings.storeInfo.logo ? 'Change Logo' : 'Upload Logo'}
+                    </span>
+                  </label>
+                </div>
+                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">PNG or SVG recommended</p>
               </div>
             </div>
           </div>
@@ -221,21 +278,76 @@ const Settings = () => {
         {/* 5. Banner Management */}
         <SettingsCard title="Banner Management" icon={<ImageIcon size={24} />} delay={0.5}>
           <div className="flex flex-col gap-4">
-            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Home Banner URL</label>
-            <div className="aspect-[21/9] w-full rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-2 overflow-hidden relative group">
-              {settings.banners.home ? <img src={settings.banners.home} className="w-full h-full object-cover" /> : <Upload size={24} className="text-gray-500" />}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                 <InputGroup placeholder="Banner URL..." value={settings.banners.home} onChange={(e) => setSettings({...settings, banners: {...settings.banners, home: e.target.value}})} />
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Hero Banner</label>
+            <div className="aspect-[21/9] w-full rounded-3xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center gap-2 overflow-hidden relative group shadow-sm">
+              {settings.banners.home ? (
+                <img src={getImageUrl(settings.banners.home)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              ) : (
+                <div className="flex flex-col items-center gap-3">
+                  <ImageIcon size={32} className="text-slate-200" />
+                  <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">No Banner Uploaded</span>
+                </div>
+              )}
+              
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                 <div className="relative">
+                   <input 
+                     type="file" 
+                     id="home-banner-upload"
+                     className="hidden"
+                     onChange={(e) => handleImageUpload(e, 'banners', 'home')}
+                     accept="image/*"
+                   />
+                   <label 
+                     htmlFor="home-banner-upload"
+                     className="bg-white text-slate-900 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-white transition-all shadow-2xl"
+                   >
+                     Replace Banner
+                   </label>
+                 </div>
               </div>
+              {uploadingField === 'banners.home' && (
+                <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                  <Loader2 size={32} className="text-primary animate-spin" />
+                </div>
+              )}
             </div>
           </div>
+
           <div className="flex flex-col gap-4">
-            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Offer Banner URL</label>
-            <div className="aspect-[21/9] w-full rounded-2xl bg-white/5 border border-white/10 flex flex-col items-center justify-center gap-2 overflow-hidden relative group">
-              {settings.banners.offer ? <img src={settings.banners.offer} className="w-full h-full object-cover" /> : <Upload size={24} className="text-gray-500" />}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                 <InputGroup placeholder="Banner URL..." value={settings.banners.offer} onChange={(e) => setSettings({...settings, banners: {...settings.banners, offer: e.target.value}})} />
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Promotion Banner</label>
+            <div className="aspect-[21/9] w-full rounded-3xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center gap-2 overflow-hidden relative group shadow-sm">
+              {settings.banners.offer ? (
+                <img src={getImageUrl(settings.banners.offer)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              ) : (
+                <div className="flex flex-col items-center gap-3">
+                  <ImageIcon size={32} className="text-slate-200" />
+                  <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">No Banner Uploaded</span>
+                </div>
+              )}
+              
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                 <div className="relative">
+                   <input 
+                     type="file" 
+                     id="offer-banner-upload"
+                     className="hidden"
+                     onChange={(e) => handleImageUpload(e, 'banners', 'offer')}
+                     accept="image/*"
+                   />
+                   <label 
+                     htmlFor="offer-banner-upload"
+                     className="bg-white text-slate-900 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-white transition-all shadow-2xl"
+                   >
+                     Replace Banner
+                   </label>
+                 </div>
               </div>
+              {uploadingField === 'banners.offer' && (
+                <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                  <Loader2 size={32} className="text-primary animate-spin" />
+                </div>
+              )}
             </div>
           </div>
         </SettingsCard>
@@ -246,13 +358,13 @@ const Settings = () => {
             <div className="md:col-span-2 flex flex-col gap-6">
               <Toggle label="Dark Mode" enabled={settings.theme.darkMode} onToggle={() => setSettings({...settings, theme: {...settings.theme, darkMode: !settings.theme.darkMode}})} />
               <div>
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 block">Primary Color</label>
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 block">Primary Color</label>
                 <div className="flex gap-4">
                   {['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'].map(color => (
                     <button 
                       key={color}
                       onClick={() => setSettings({...settings, theme: {...settings.theme, primaryColor: color}})}
-                      className={`w-10 h-10 rounded-full border-2 transition-all ${settings.theme.primaryColor === color ? 'border-white scale-110' : 'border-transparent opacity-50 hover:opacity-100'}`}
+                      className={`w-10 h-10 rounded-full border-2 transition-all ${settings.theme.primaryColor === color ? 'border-slate-400 scale-110' : 'border-transparent opacity-50 hover:opacity-100'}`}
                       style={{ backgroundColor: color }}
                     />
                   ))}
@@ -265,11 +377,11 @@ const Settings = () => {
             <div className="md:col-span-2 flex flex-col gap-5">
               <InputGroup label="Meta Title" value={settings.seo.title} onChange={(e) => setSettings({...settings, seo: {...settings.seo, title: e.target.value}})} icon={<Globe size={18} />} />
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">Meta Description</label>
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Meta Description</label>
                 <textarea 
                   value={settings.seo.description}
                   onChange={(e) => setSettings({...settings, seo: {...settings.seo, description: e.target.value}})}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all text-sm h-24 resize-none"
+                  className="w-full bg-slate-100 border border-slate-200 rounded-xl p-4 text-slate-900 focus:outline-none focus:border-primary/50 focus:bg-white transition-all text-sm h-24 resize-none placeholder:text-slate-400"
                 />
               </div>
             </div>
@@ -279,11 +391,11 @@ const Settings = () => {
       </div>
 
       {/* Sticky Save Button (Mobile) */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-[#0a0a0a]/80 backdrop-blur-xl border-t border-white/5 md:hidden z-40">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-xl border-t border-slate-100 md:hidden z-40 shadow-up-xl">
         <button 
           onClick={handleSave}
           disabled={saving}
-          className="w-full flex items-center justify-center gap-2 bg-primary text-dark-bg font-black py-4 rounded-2xl shadow-[0_-4px_20px_rgba(16,185,129,0.2)] disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-2 bg-primary text-white font-black py-4 rounded-2xl shadow-[0_-4px_20px_rgba(16,185,129,0.1)] disabled:opacity-50"
         >
           {saving ? <Loader2 size={20} className="animate-spin" /> : <Save size={20} />}
           Save All Settings

@@ -53,8 +53,8 @@ const categoryData = [
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-[#141414]/95 backdrop-blur-md border border-white/10 p-4 rounded-2xl shadow-xl">
-        <p className="text-white font-bold mb-2">{label}</p>
+      <div className="bg-white/95 backdrop-blur-md border border-slate-200 p-4 rounded-2xl shadow-xl">
+        <p className="text-slate-900 font-bold mb-2">{label}</p>
         {payload.map((entry, index) => (
           <p key={index} style={{ color: entry.color || entry.fill }} className="text-sm font-medium">
             {entry.name}: {entry.name.toLowerCase().includes('revenue') || entry.name.toLowerCase().includes('sales') ? '$' : ''}{entry.value}
@@ -72,15 +72,15 @@ const Analytics = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl md:text-4xl font-black text-white mb-2">Analytics</h1>
-          <p className="text-gray-400">Deep dive into your store's metrics and growth.</p>
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">Analytics</h1>
+          <p className="text-slate-500">Deep dive into your store's metrics and growth.</p>
         </div>
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white font-bold px-4 py-2.5 rounded-xl transition-all border border-white/10 text-sm">
-            <Calendar size={16} className="text-gray-400" />
+          <button className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl transition-all border border-slate-200 text-sm">
+            <Calendar size={16} className="text-slate-400" />
             Last 30 Days
           </button>
-          <button className="flex items-center gap-2 bg-primary hover:bg-emerald-400 text-dark-bg font-bold px-4 py-2.5 rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] text-sm">
+          <button className="flex items-center gap-2 bg-primary hover:bg-emerald-400 text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-[0_10px_20px_rgba(16,185,129,0.2)] text-sm">
             <Download size={16} />
             Export Report
           </button>
@@ -102,21 +102,21 @@ const Analytics = () => {
                 <BarChart3 size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Monthly Sales</h2>
-                <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Actual vs Expected</p>
+                <h2 className="text-xl font-bold text-slate-900 mb-1">Monthly Sales</h2>
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Actual vs Expected</p>
               </div>
             </div>
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={monthlySalesData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="name" stroke="rgba(255,255,255,0.3)" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="rgba(255,255,255,0.3)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value/1000}k`} />
-                <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
+                <XAxis dataKey="name" stroke="rgba(0,0,0,0.3)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="rgba(0,0,0,0.3)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value/1000}k`} />
+                <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} />
                 <Legend iconType="circle" wrapperStyle={{ fontSize: '12px', paddingTop: '20px' }} />
                 <Bar dataKey="sales" name="Actual Sales" fill="#10b981" radius={[4, 4, 0, 0]} barSize={20} />
-                <Bar dataKey="expected" name="Expected Target" fill="rgba(255,255,255,0.1)" radius={[4, 4, 0, 0]} barSize={20} />
+                <Bar dataKey="expected" name="Expected Target" fill="rgba(0,0,0,0.05)" radius={[4, 4, 0, 0]} barSize={20} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -135,17 +135,17 @@ const Analytics = () => {
                 <TrendingUp size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Revenue Growth</h2>
-                <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Weekly Progression</p>
+                <h2 className="text-xl font-bold text-slate-900 mb-1">Revenue Growth</h2>
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Weekly Progression</p>
               </div>
             </div>
           </div>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={revenueGrowthData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="name" stroke="rgba(255,255,255,0.3)" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="rgba(255,255,255,0.3)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value/1000}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
+                <XAxis dataKey="name" stroke="rgba(0,0,0,0.3)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="rgba(0,0,0,0.3)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value/1000}k`} />
                 <RechartsTooltip content={<CustomTooltip />} />
                 <Line type="monotone" dataKey="revenue" name="Revenue" stroke="#0ea5e9" strokeWidth={4} dot={{ fill: '#0ea5e9', strokeWidth: 2, r: 4 }} activeDot={{ r: 8, strokeWidth: 0 }} />
               </LineChart>
@@ -166,8 +166,8 @@ const Analytics = () => {
                 <PieChartIcon size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Orders Overview</h2>
-                <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">By Status</p>
+                <h2 className="text-xl font-bold text-slate-900 mb-1">Orders Overview</h2>
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">By Status</p>
               </div>
             </div>
           </div>
@@ -192,8 +192,8 @@ const Analytics = () => {
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none flex-col">
-              <span className="text-3xl font-black text-white">1,100</span>
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Total Orders</span>
+              <span className="text-3xl font-black text-slate-900">1,100</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Orders</span>
             </div>
           </div>
           
@@ -202,7 +202,7 @@ const Analytics = () => {
             {orderStatusData.map((entry, index) => (
               <div key={entry.name} className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
-                <span className="text-xs font-bold text-gray-400">{entry.name}</span>
+                <span className="text-xs font-bold text-slate-400">{entry.name}</span>
               </div>
             ))}
           </div>
@@ -221,8 +221,8 @@ const Analytics = () => {
                 <ShoppingBag size={24} />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-white mb-1">Top Categories</h2>
-                <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Sales by Segment</p>
+                <h2 className="text-xl font-bold text-slate-900 mb-1">Top Categories</h2>
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Sales by Segment</p>
               </div>
             </div>
           </div>
@@ -235,9 +235,9 @@ const Analytics = () => {
                     <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="name" stroke="rgba(255,255,255,0.3)" fontSize={12} tickLine={false} axisLine={false} />
-                <YAxis stroke="rgba(255,255,255,0.3)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value/1000}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
+                <XAxis dataKey="name" stroke="rgba(0,0,0,0.3)" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="rgba(0,0,0,0.3)" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value/1000}k`} />
                 <RechartsTooltip content={<CustomTooltip />} />
                 <Area type="step" dataKey="sales" name="Sales" stroke="#f59e0b" strokeWidth={3} fillOpacity={1} fill="url(#colorCategory)" />
               </AreaChart>

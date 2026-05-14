@@ -1,38 +1,39 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @theme {
   --color-primary: #10b981;
   --color-primary-dark: #059669;
   --color-secondary: #f59e0b;
   --color-secondary-dark: #d97706;
-  --color-dark-bg: #0a0a0a;
-  --color-dark-card: #141414;
-  --color-dark-accent: #1f1f1f;
-  
-  --font-sans: "Inter", "sans-serif";
+  --color-dark-bg: #f8fafc;
+  --color-dark-card: #ffffff;
+  --color-dark-accent: #f1f5f9;
+
+  --font-sans: "Outfit", "Inter", "sans-serif";
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Outfit", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #0a0a0a;
+  color-scheme: light;
+  color: #0f172a;
+  background-color: #f8fafc;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-smoothing: grayscale;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 /* Custom Scrollbar */
@@ -41,31 +42,42 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1f1f1f;
+  background: #e2e8f0;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2a2a2a;
+  background: #cbd5e1;
 }
 
 /* Glassmorphism Classes */
 @utility glass {
-  background: rgba(20, 20, 20, 0.7);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 @utility glass-card {
-  background: rgba(30, 30, 30, 0.4);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+/* God-Tier Mesh Background */
+@utility mesh-gradient {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
 }
 
 /* Gradient Text */
@@ -79,9 +91,19 @@ body {
 @utility btn-gradient {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   transition: all 0.3s ease;
+  color: white;
 }
 
 .btn-gradient:hover {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
   transform: translateY(-2px);
 }
+/* God-Tier Reveal Animation */
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.reveal { animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+
+html { scroll-behavior: smooth; }
