@@ -208,9 +208,11 @@ const Navbar = () => {
                 )}
               </div>
               <div className="flex flex-col gap-4">
-                <Link to="/" className="text-lg font-medium text-slate-700 hover:text-primary transition-colors">Home</Link>
-                <Link to="/categories" className="text-lg font-medium text-slate-700 hover:text-primary transition-colors">Categories</Link>
-                <Link to="/offers" className="text-lg font-medium text-slate-700 hover:text-primary transition-colors">Special Offers</Link>
+                <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-bold text-slate-700 hover:text-primary transition-colors">Home</Link>
+                {isAuthenticated && (
+                  <Link to="/my-orders" onClick={() => setIsOpen(false)} className="text-lg font-bold text-slate-700 hover:text-primary transition-colors">My Orders</Link>
+                )}
+                <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-bold text-slate-700 hover:text-primary transition-colors">Contact Support</Link>
               </div>
               <hr className="border-slate-100" />
               <div className="flex items-center justify-between">

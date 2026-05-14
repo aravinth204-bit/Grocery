@@ -58,9 +58,9 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md relative z-10"
       >
-        <div className="glass p-8 sm:p-12 rounded-[3rem] border border-white/10 shadow-2xl">
+        <div className="glass p-6 sm:p-12 rounded-[2.5rem] sm:rounded-[3rem] border border-white/10 shadow-2xl">
           
-          <div className="flex flex-col items-center mb-10">
+          <div className="flex flex-col items-center mb-8 sm:bottom-10">
             <Link to="/" className="flex items-center gap-2 mb-6">
               <div className="p-2 rounded-xl bg-primary/10 text-primary">
                 <ShoppingBasket size={32} />
@@ -69,8 +69,8 @@ const Login = () => {
                 Fresh<span className="text-primary">Cart</span>
               </span>
             </Link>
-            <h2 className="text-3xl font-black text-white text-center">Welcome Back</h2>
-            <p className="text-gray-400 mt-2 text-center">Enter your details to access your account</p>
+            <h2 className="text-2xl sm:text-3xl font-black text-white text-center">Welcome Back</h2>
+            <p className="text-gray-400 mt-2 text-center text-sm sm:text-base px-2">Enter your details to access your account</p>
           </div>
 
           <AnimatePresence mode="wait">
@@ -87,7 +87,7 @@ const Login = () => {
             )}
           </AnimatePresence>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
               <input 
@@ -97,7 +97,7 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email Address"
-                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                className="w-full bg-slate-900/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-[16px] sm:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all autofill:bg-transparent"
               />
             </div>
 
@@ -110,7 +110,7 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                className="w-full bg-slate-900/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-[16px] sm:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all autofill:bg-transparent"
               />
             </div>
 

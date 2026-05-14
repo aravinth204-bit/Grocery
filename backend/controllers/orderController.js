@@ -2,9 +2,11 @@ import Order from '../models/Order.js';
 import User from '../models/User.js';
 import Product from '../models/Product.js';
 import Notification from '../models/Notification.js';
+import Settings from '../models/Settings.js';
 import { sendOrderNotification } from '../utils/whatsappService.js';
 import { generateInvoice } from '../utils/invoiceGenerator.js';
 import path from 'path';
+import fs from 'fs';
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -55,9 +57,16 @@ export const addOrderItems = async (req, res) => {
       });
 
       // Generate Invoice PDF
+      const settings = await Settings.findOne();
       const invoiceName = `invoice-${createdOrder._id}.pdf`;
-      const invoicePath = path.join(process.cwd(), 'uploads', 'invoices', invoiceName);
-      await generateInvoice(createdOrder, invoicePath);
+      const invoicesDir = path.join(process.cwd(), 'uploads', 'invoices');
+      
+      if (!fs.existsSync(invoicesDir)) {
+        fs.mkdirSync(invoicesDir, { recursive: true });
+      }
+
+      const invoicePath = path.join(invoicesDir, invoiceName);
+      await generateInvoice(createdOrder, invoicePath, settings);
       
       // Update order with invoice URL
       createdOrder.invoiceUrl = `/uploads/invoices/${invoiceName}`;

@@ -12,49 +12,49 @@ const OfferBanner = () => {
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative rounded-[3.5rem] overflow-hidden bg-gradient-to-r from-slate-50 to-white border border-slate-100 p-10 md:p-24 shadow-2xl shadow-slate-200/50"
+          className="relative rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden bg-gradient-to-r from-slate-50 to-white border border-slate-100 p-8 md:p-24 shadow-2xl shadow-slate-200/50"
         >
           {/* Background Decorative Circles */}
           <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-primary/5 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-secondary/5 blur-[120px] rounded-full -translate-x-1/2 translate-y-1/2"></div>
 
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="flex flex-col gap-10 text-center lg:text-left">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+            <div className="flex flex-col gap-6 md:gap-10 text-center lg:text-left">
               <motion.div 
                 whileHover={{ scale: 1.05 }}
-                className="inline-flex items-center gap-3 bg-primary/10 text-primary px-6 py-2.5 rounded-2xl w-fit mx-auto lg:mx-0 border border-primary/20 shadow-sm"
+                className="inline-flex items-center gap-3 bg-primary/10 text-primary px-5 py-2 rounded-2xl w-fit mx-auto lg:mx-0 border border-primary/20 shadow-sm"
               >
-                <Tag size={18} />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em]">Exclusive Membership Offer</span>
+                <Tag size={16} />
+                <span className="text-[9px] font-black uppercase tracking-[0.3em]">Exclusive Membership Offer</span>
               </motion.div>
               
-              <h2 className="text-5xl md:text-8xl font-black leading-[0.9] text-slate-900 tracking-tighter">
+              <h2 className="text-3xl md:text-5xl lg:text-8xl font-black leading-[1.1] lg:leading-[0.9] text-slate-900 tracking-tighter">
                 Elite <span className="text-gradient">Savings</span> <br />
                 Await You.
               </h2>
               
-              <p className="text-slate-500 text-lg md:text-2xl max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+              <p className="text-slate-500 text-sm md:text-xl lg:text-2xl max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed px-4 md:px-0">
                 Experience the pinnacle of organic freshness. Join our elite circle and enjoy 30% off your first delivery.
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center gap-8 justify-center lg:justify-start">
-                <div className="group relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-[2rem] blur opacity-20 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
-                  <span className="relative text-slate-900 font-black text-2xl tracking-[0.4em] px-10 py-5 bg-white rounded-[1.8rem] border border-slate-200 block shadow-sm uppercase">
+              <div className="flex flex-col sm:flex-row items-center gap-6 lg:gap-8 justify-center lg:justify-start">
+                <div className="group relative w-full sm:w-auto">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl lg:rounded-[2rem] blur opacity-20 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
+                  <span className="relative text-slate-900 font-black text-xl lg:text-2xl tracking-[0.4em] px-8 lg:px-10 py-4 lg:py-5 bg-white rounded-2xl lg:rounded-[1.8rem] border border-slate-200 block shadow-sm uppercase">
                     FRESH30
                   </span>
                 </div>
                 <Magnetic>
                   <button 
                     onClick={() => document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="btn-gradient px-14 py-6 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] text-white flex items-center gap-4 group shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all"
+                    className="btn-gradient px-10 lg:px-14 py-4 lg:py-6 rounded-2xl lg:rounded-[2rem] font-black text-[10px] lg:text-xs uppercase tracking-[0.2em] text-white flex items-center gap-3 lg:gap-4 group shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all w-full sm:w-auto justify-center"
                   >
-                    Claim Offer <ArrowRight size={22} className="group-hover:translate-x-1.5 transition-transform" />
+                    Claim Offer <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform" />
                   </button>
                 </Magnetic>
               </div>
               
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">*Elite delivery service available in select regions</p>
+              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest px-4 md:px-0">*Elite delivery service available in select regions</p>
             </div>
 
             <div className="hidden lg:flex justify-center relative">

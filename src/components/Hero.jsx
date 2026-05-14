@@ -83,10 +83,10 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center min-h-[70vh]"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center min-h-[70vh] lg:min-h-[70vh]"
           >
             {/* Content Side */}
-            <div className="flex flex-col gap-10 text-center lg:text-left relative z-20">
+            <div className="flex flex-col gap-6 lg:gap-10 text-center lg:text-left relative z-20 order-last lg:order-first">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ const Hero = () => {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-6xl md:text-8xl font-black leading-[1] text-slate-900 tracking-tight"
+                className="text-4xl md:text-6xl lg:text-8xl font-black leading-[1.1] lg:leading-[1] text-slate-900 tracking-tighter"
               >
                 {currentBanner.title} <br />
                 <span className="text-gradient">{currentBanner.subtitle}</span>
@@ -113,7 +113,7 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-slate-500 text-lg md:text-2xl max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed"
+                className="text-slate-500 text-base md:text-xl lg:text-2xl max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed px-4 lg:px-0"
               >
                 {currentBanner.description}
               </motion.p>
@@ -122,21 +122,21 @@ const Hero = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start"
+                className="flex flex-col sm:flex-row items-center gap-4 lg:gap-6 justify-center lg:justify-start"
               >
                 <Magnetic>
                   <button 
                     onClick={() => document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="btn-gradient px-12 py-5 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] text-white flex items-center gap-3 w-full sm:w-auto justify-center group shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all"
+                    className="btn-gradient px-10 lg:px-12 py-4 lg:py-5 rounded-2xl lg:rounded-[2rem] font-black text-[10px] lg:text-xs uppercase tracking-[0.2em] text-white flex items-center gap-3 w-full sm:w-auto justify-center group shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all"
                   >
                     Shop Collection 
-                    <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform" />
+                    <ArrowRight size={18} className="group-hover:translate-x-1.5 transition-transform" />
                   </button>
                 </Magnetic>
                 <Magnetic>
                   <button 
                     onClick={() => window.scrollTo({ top: window.innerHeight * 2, behavior: 'smooth' })}
-                    className="px-10 py-5 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] text-slate-600 border border-slate-200 hover:bg-white transition-all w-full sm:w-auto shadow-sm"
+                    className="px-10 py-4 lg:py-5 rounded-2xl lg:rounded-[2rem] font-black text-[10px] lg:text-xs uppercase tracking-[0.2em] text-slate-600 border border-slate-200 hover:bg-white transition-all w-full sm:w-auto shadow-sm"
                   >
                     Our Story
                   </button>
