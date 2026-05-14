@@ -26,6 +26,8 @@ const allowedOrigins = [
   process.env.ADMIN_URL,
   "https://grocery-qcmn.vercel.app",
   "https://grocery-admin.vercel.app",
+  "https://grocery-two-ashen.vercel.app",
+  "https://grocery-admin-seven-xi.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174"
 ].filter(Boolean);
