@@ -58,19 +58,19 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md relative z-10"
       >
-        <div className="glass p-6 sm:p-12 rounded-[2.5rem] sm:rounded-[3rem] border border-white/10 shadow-2xl">
+        <div className="glass p-6 sm:p-12 rounded-[2.5rem] sm:rounded-[3rem] shadow-2xl">
           
           <div className="flex flex-col items-center mb-8 sm:bottom-10">
             <Link to="/" className="flex items-center gap-2 mb-6">
               <div className="p-2 rounded-xl bg-primary/10 text-primary">
                 <ShoppingBasket size={32} />
               </div>
-              <span className="text-2xl font-bold tracking-tight text-white">
+              <span className="text-2xl font-bold tracking-tight text-slate-800">
                 Fresh<span className="text-primary">Cart</span>
               </span>
             </Link>
-            <h2 className="text-2xl sm:text-3xl font-black text-white text-center">Welcome Back</h2>
-            <p className="text-gray-400 mt-2 text-center text-sm sm:text-base px-2">Enter your details to access your account</p>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-800 text-center">Welcome Back</h2>
+            <p className="text-slate-500 mt-2 text-center text-sm sm:text-base px-2">Enter your details to access your account</p>
           </div>
 
           <AnimatePresence mode="wait">
@@ -89,7 +89,7 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
             <div className="relative">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input 
                 type="email" 
                 name="email"
@@ -97,12 +97,12 @@ const Login = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email Address"
-                className="w-full bg-slate-900/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-[16px] sm:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all autofill:bg-transparent"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-[16px] sm:text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all autofill:bg-transparent"
               />
             </div>
 
             <div className="relative">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input 
                 type="password" 
                 name="password"
@@ -110,13 +110,13 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="w-full bg-slate-900/50 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-[16px] sm:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all autofill:bg-transparent"
+                className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-[16px] sm:text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all autofill:bg-transparent"
               />
             </div>
 
             <div className="flex items-center justify-between px-2 text-sm">
-              <label className="flex items-center gap-2 text-gray-400 cursor-pointer">
-                <input type="checkbox" className="rounded border-white/10 bg-white/5 text-primary focus:ring-primary/30" />
+              <label className="flex items-center gap-2 text-slate-500 cursor-pointer">
+                <input type="checkbox" className="rounded border-slate-200 bg-slate-50 text-primary focus:ring-primary/30" />
                 Remember me
               </label>
               <a href="#" className="text-primary hover:underline font-medium">Forgot password?</a>
@@ -138,22 +138,22 @@ const Login = () => {
           </form>
 
           <div className="mt-8 flex items-center gap-4">
-            <div className="h-px bg-white/5 flex-1" />
-            <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Or continue with</span>
-            <div className="h-px bg-white/5 flex-1" />
+            <div className="h-px bg-slate-100 flex-1" />
+            <span className="text-xs text-slate-400 font-bold uppercase tracking-widest">Or continue with</span>
+            <div className="h-px bg-slate-100 flex-1" />
           </div>
 
           <div className="grid grid-cols-2 gap-4 mt-8">
-            <button className="flex items-center justify-center gap-2 py-3 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-sm font-medium">
+            <button className="flex items-center justify-center gap-2 py-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 transition-all text-sm font-medium text-slate-700">
               <Chrome size={18} /> Google
             </button>
-            <button className="flex items-center justify-center gap-2 py-3 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-sm font-medium">
+            <button className="flex items-center justify-center gap-2 py-3 bg-white border border-slate-200 rounded-2xl hover:bg-slate-50 transition-all text-sm font-medium text-slate-700">
               <Github size={18} /> Github
             </button>
           </div>
 
-          <div className="mt-10 text-center text-sm text-gray-400">
-            Don't have an account? <Link to="/register" className="text-white font-bold hover:text-primary transition-colors">Sign up</Link>
+          <div className="mt-10 text-center text-sm text-slate-500">
+            Don't have an account? <Link to="/register" className="text-slate-800 font-bold hover:text-primary transition-colors">Sign up</Link>
           </div>
 
         </div>

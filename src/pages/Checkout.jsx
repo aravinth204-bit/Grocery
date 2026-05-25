@@ -84,7 +84,7 @@ const Checkout = () => {
     <div className="min-h-screen pt-32 pb-20 px-6 bg-dark-bg">
       <div className="container mx-auto max-w-6xl">
         
-        <Link to="/cart" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-12 group w-fit">
+        <Link to="/cart" className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors mb-12 group w-fit">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
           Back to cart
         </Link>
@@ -98,9 +98,9 @@ const Checkout = () => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass p-8 sm:p-10 rounded-[2.5rem] border border-white/10"
+              className="glass p-8 sm:p-10 rounded-[2.5rem]"
             >
-              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3 text-slate-800">
                 <div className="p-2 rounded-xl bg-primary/10 text-primary">
                   <MapPin size={24} />
                 </div>
@@ -113,7 +113,7 @@ const Checkout = () => {
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6"
               >
                 <div className="sm:col-span-2 relative">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   <input 
                     type="text" 
                     name="name"
@@ -121,11 +121,11 @@ const Checkout = () => {
                     value={shippingData.name}
                     onChange={handleInputChange}
                     placeholder="Full Name"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
                 <div className="relative">
-                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                  <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   <input 
                     type="tel" 
                     name="mobile"
@@ -133,7 +133,7 @@ const Checkout = () => {
                     value={shippingData.mobile}
                     onChange={handleInputChange}
                     placeholder="Mobile Number"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
                 <div className="relative">
@@ -144,7 +144,7 @@ const Checkout = () => {
                     value={shippingData.pincode}
                     onChange={handleInputChange}
                     placeholder="Pincode"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
                 <div className="sm:col-span-2 relative">
@@ -155,7 +155,7 @@ const Checkout = () => {
                     value={shippingData.address}
                     onChange={handleInputChange}
                     placeholder="Complete Address (Street, Building, Flat No)"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
                 <div className="sm:col-span-2 relative">
@@ -166,7 +166,7 @@ const Checkout = () => {
                     value={shippingData.city}
                     onChange={handleInputChange}
                     placeholder="City"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/30"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
               </form>
@@ -177,9 +177,9 @@ const Checkout = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="glass p-8 sm:p-10 rounded-[2.5rem] border border-white/10"
+              className="glass p-8 sm:p-10 rounded-[2.5rem]"
             >
-              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3 text-slate-800">
                 <div className="p-2 rounded-xl bg-primary/10 text-primary">
                   <CreditCard size={24} />
                 </div>
@@ -191,14 +191,14 @@ const Checkout = () => {
                   onClick={() => setPaymentMethod('cod')}
                   className={`p-6 rounded-3xl border-2 transition-all flex flex-col gap-4 text-left ${
                     paymentMethod === 'cod' 
-                    ? 'border-primary bg-primary/5 text-white' 
-                    : 'border-white/5 bg-white/5 text-gray-400 hover:border-white/20'
+                    ? 'border-primary bg-primary/5 text-slate-800' 
+                    : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
                   }`}
                 >
-                  <Banknote size={32} className={paymentMethod === 'cod' ? 'text-primary' : 'text-gray-500'} />
+                  <Banknote size={32} className={paymentMethod === 'cod' ? 'text-primary' : 'text-slate-400'} />
                   <div>
                     <p className="font-bold">Cash on Delivery</p>
-                    <p className="text-xs text-gray-500 mt-1">Pay when you receive the order</p>
+                    <p className="text-xs text-slate-500 mt-1">Pay when you receive the order</p>
                   </div>
                 </button>
 
@@ -206,14 +206,14 @@ const Checkout = () => {
                   onClick={() => setPaymentMethod('online')}
                   className={`p-6 rounded-3xl border-2 transition-all flex flex-col gap-4 text-left ${
                     paymentMethod === 'online' 
-                    ? 'border-primary bg-primary/5 text-white' 
-                    : 'border-white/5 bg-white/5 text-gray-400 hover:border-white/20'
+                    ? 'border-primary bg-primary/5 text-slate-800' 
+                    : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
                   }`}
                 >
-                  <CreditCard size={32} className={paymentMethod === 'online' ? 'text-primary' : 'text-gray-500'} />
+                  <CreditCard size={32} className={paymentMethod === 'online' ? 'text-primary' : 'text-slate-400'} />
                   <div>
                     <p className="font-bold">Online Payment</p>
-                    <p className="text-xs text-gray-500 mt-1">Pay via UPI, Card, or Netbanking</p>
+                    <p className="text-xs text-slate-500 mt-1">Pay via UPI, Card, or Netbanking</p>
                   </div>
                 </button>
               </div>
@@ -225,9 +225,9 @@ const Checkout = () => {
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="glass p-8 rounded-[2.5rem] border border-white/10 sticky top-32"
+              className="glass p-8 rounded-[2.5rem] sticky top-32"
             >
-              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
+              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3 text-slate-800">
                 <div className="p-2 rounded-xl bg-primary/10 text-primary">
                   <ShoppingBag size={24} />
                 </div>
@@ -237,30 +237,30 @@ const Checkout = () => {
               <div className="flex flex-col gap-4 max-h-[300px] overflow-y-auto mb-8 pr-2 custom-scrollbar">
                 {cart.map((item) => (
                   <div key={item.id} className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-white/5 flex-shrink-0 overflow-hidden">
+                    <div className="w-12 h-12 rounded-xl bg-slate-100 flex-shrink-0 overflow-hidden border border-slate-100">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-white truncate">{item.name}</p>
-                      <p className="text-xs text-gray-500">{item.quantity} × ${item.price.toFixed(2)}</p>
+                      <p className="text-sm font-bold text-slate-800 truncate">{item.name}</p>
+                      <p className="text-xs text-slate-500">{item.quantity} × ${item.price.toFixed(2)}</p>
                     </div>
-                    <p className="text-sm font-bold text-gray-300">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="text-sm font-bold text-slate-800">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="flex flex-col gap-4 py-6 border-y border-white/5 mb-8">
-                <div className="flex justify-between text-sm text-gray-400">
+              <div className="flex flex-col gap-4 py-6 border-y border-slate-100 mb-8">
+                <div className="flex justify-between text-sm text-slate-500">
                   <span>Subtotal</span>
-                  <span className="text-white">${cartTotal.toFixed(2)}</span>
+                  <span className="text-slate-800 font-bold">${cartTotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm text-gray-400">
+                <div className="flex justify-between text-sm text-slate-500">
                   <span>Delivery Fee</span>
                   <span className="text-primary font-bold">
                     {deliveryFee === 0 ? "FREE" : `$${deliveryFee.toFixed(2)}`}
                   </span>
                 </div>
-                <div className="flex justify-between text-xl font-black pt-2">
+                <div className="flex justify-between text-xl font-black pt-2 text-slate-800">
                   <span>Total</span>
                   <span className="text-primary">${grandTotal.toFixed(2)}</span>
                 </div>

@@ -30,7 +30,7 @@ const OrderSuccess = () => {
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="glass p-10 md:p-16 rounded-[3.5rem] border border-white/10 shadow-2xl relative z-10 text-center"
+          className="glass p-10 md:p-16 rounded-[3.5rem] shadow-2xl relative z-10 text-center"
         >
           {/* Animated Check Icon */}
           <motion.div 
@@ -46,7 +46,7 @@ const OrderSuccess = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-4xl md:text-5xl font-black mb-4"
+            className="text-4xl md:text-5xl font-black mb-4 text-slate-800"
           >
             Order <span className="text-gradient">Placed!</span>
           </motion.h1>
@@ -55,7 +55,7 @@ const OrderSuccess = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="text-gray-400 text-lg mb-12"
+            className="text-slate-500 text-lg mb-12"
           >
             Your organic groceries are being hand-picked with care.
           </motion.p>
@@ -67,20 +67,20 @@ const OrderSuccess = () => {
             transition={{ delay: 0.6 }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12"
           >
-            <div className="bg-white/5 p-6 rounded-3xl border border-white/5 text-left">
+            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200 text-left">
               <div className="flex items-center gap-3 text-primary mb-2">
                 <Package size={18} />
-                <span className="text-xs font-bold uppercase tracking-widest">Order ID</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Order ID</span>
               </div>
-              <p className="text-sm font-mono text-gray-300 truncate">#{id}</p>
+              <p className="text-sm font-mono text-slate-600 truncate">#{id}</p>
             </div>
 
-            <div className="bg-white/5 p-6 rounded-3xl border border-white/5 text-left">
+            <div className="bg-slate-50 p-6 rounded-3xl border border-slate-200 text-left">
               <div className="flex items-center gap-3 text-secondary mb-2">
                 <Clock size={18} />
-                <span className="text-xs font-bold uppercase tracking-widest">Estimated Delivery</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Estimated Delivery</span>
               </div>
-              <p className="text-lg font-bold text-white">Today, by {formattedTime}</p>
+              <p className="text-lg font-bold text-slate-800">Today, by {formattedTime}</p>
             </div>
           </motion.div>
 
@@ -91,9 +91,9 @@ const OrderSuccess = () => {
                 <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
                   <CheckCircle2 size={18} />
                 </div>
-                <span className="text-[10px] font-bold text-gray-500 uppercase">Confirmed</span>
+                <span className="text-[10px] font-bold text-slate-500 uppercase">Confirmed</span>
               </div>
-              <div className="flex-1 h-0.5 bg-white/10 mt-5 mx-2 relative overflow-hidden">
+              <div className="flex-1 h-0.5 bg-slate-200 mt-5 mx-2 relative overflow-hidden">
                 <motion.div 
                   initial={{ x: '-100%' }}
                   animate={{ x: '0%' }}
@@ -102,17 +102,17 @@ const OrderSuccess = () => {
                 />
               </div>
               <div className="flex flex-col items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-500">
+                <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 border border-slate-200">
                   <Package size={18} />
                 </div>
-                <span className="text-[10px] font-bold text-gray-500 uppercase">Packing</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase">Packing</span>
               </div>
-              <div className="flex-1 h-0.5 bg-white/10 mt-5 mx-2" />
+              <div className="flex-1 h-0.5 bg-slate-200 mt-5 mx-2" />
               <div className="flex flex-col items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-500">
+                <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 border border-slate-200">
                   <Truck size={18} />
                 </div>
-                <span className="text-[10px] font-bold text-gray-500 uppercase">On Way</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase">On Way</span>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ const OrderSuccess = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link 
               to="/" 
-              className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 py-4 rounded-2xl font-bold text-white transition-all flex items-center justify-center gap-2"
+              className="flex-1 bg-white hover:bg-slate-50 border border-slate-200 py-4 rounded-2xl font-bold text-slate-700 transition-all flex items-center justify-center gap-2 shadow-sm"
             >
               <ShoppingBag size={20} /> Continue Shopping
             </Link>
@@ -133,7 +133,7 @@ const OrderSuccess = () => {
             </Link>
           </div>
 
-          <div className="mt-12 flex items-center justify-center gap-2 text-gray-500 text-xs">
+          <div className="mt-12 flex items-center justify-center gap-2 text-slate-400 text-xs">
             <MapPin size={14} className="text-primary" />
             <span>Delivery to your saved primary address</span>
           </div>

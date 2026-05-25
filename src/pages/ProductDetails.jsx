@@ -86,7 +86,7 @@ const ProductDetails = () => {
         
         <Link 
           to="/"
-          className="relative z-[20] inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all mb-10 group cursor-pointer backdrop-blur-sm"
+          className="relative z-[20] inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-all mb-10 group cursor-pointer backdrop-blur-sm"
         >
           <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-sm font-bold tracking-tight">Back to browsing</span>
@@ -96,7 +96,7 @@ const ProductDetails = () => {
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="relative rounded-[3rem] overflow-hidden bg-white/5 border border-white/5"
+            className="relative rounded-[3rem] overflow-hidden bg-white border border-slate-150 shadow-sm"
           >
             <img src={getImageUrl(product.image)} alt={product.name} className="w-full aspect-square object-cover p-12" />
             <div className="absolute top-6 left-6">
@@ -114,23 +114,23 @@ const ProductDetails = () => {
                     <Star key={i} size={16} fill={i < Math.floor(product.rating) ? "currentColor" : "none"} />
                   ))}
                 </div>
-                <span className="text-gray-400 text-sm">({product.rating} Customer Rating)</span>
+                <span className="text-slate-500 text-sm">({product.rating} Customer Rating)</span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-black mb-4">{product.name}</h1>
+              <h1 className="text-4xl md:text-6xl font-black mb-4 text-slate-800">{product.name}</h1>
               <p className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</p>
             </div>
 
-            <p className="text-gray-400 text-lg leading-relaxed border-l-4 border-primary/30 pl-6 py-2">
+            <p className="text-slate-600 text-lg leading-relaxed border-l-4 border-primary/30 pl-6 py-2">
               {product.description}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 pt-4">
-              <div className="flex items-center gap-6 bg-white/5 p-2 rounded-2xl border border-white/5 w-full sm:w-auto justify-between sm:justify-start">
-                <button onClick={() => setQuantity(prev => Math.max(1, prev - 1))} className="p-3 hover:bg-white/10 rounded-xl transition-colors">
+              <div className="flex items-center gap-6 bg-slate-50 p-2 rounded-2xl border border-slate-200 w-full sm:w-auto justify-between sm:justify-start">
+                <button onClick={() => setQuantity(prev => Math.max(1, prev - 1))} className="p-3 hover:bg-slate-200/50 rounded-xl transition-colors text-slate-600">
                   <Minus size={20} />
                 </button>
-                <span className="font-black text-xl w-8 text-center">{quantity}</span>
-                <button onClick={() => setQuantity(prev => prev + 1)} className="p-3 hover:bg-white/10 rounded-xl transition-colors">
+                <span className="font-black text-xl w-8 text-center text-slate-800">{quantity}</span>
+                <button onClick={() => setQuantity(prev => prev + 1)} className="p-3 hover:bg-slate-200/50 rounded-xl transition-colors text-slate-600">
                   <Plus size={20} />
                 </button>
               </div>
@@ -140,7 +140,7 @@ const ProductDetails = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-white/5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-slate-200/60">
               <div className="flex flex-col items-center sm:items-start gap-2">
                 <Truck size={24} className="text-primary" />
                 <p className="text-xs font-bold uppercase tracking-wider">Fast Delivery</p>
