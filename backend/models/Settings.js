@@ -31,7 +31,9 @@ const settingsSchema = new mongoose.Schema({
     keywords: { type: String, default: 'groceries, fresh fruits' },
   },
   banners: {
-    home: { type: String, default: '' },
+    home1: { type: String, default: '' },
+    home2: { type: String, default: '' },
+    home3: { type: String, default: '' },
     offer: { type: String, default: '' },
   },
   theme: {

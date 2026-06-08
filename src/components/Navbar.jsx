@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Search, Menu, X, User, ShoppingBasket } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useCart from '../hooks/useCart';
 import { useSearch } from '../context/SearchContext';
 import { useAuth } from '../context/AuthContext';
@@ -16,6 +16,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const location = useLocation();
+  
+  const isHome = location.pathname === '/';
+  const isDarkBg = isHome && !scrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +53,13 @@ const Navbar = () => {
       />
 
       <div className="container mx-auto px-6">
-        <div className={`rounded-3xl md:rounded-[2.5rem] px-8 py-4 flex items-center justify-between border border-white/40 transition-all duration-500 ${scrolled ? 'bg-white/80 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.05)]' : 'bg-white/40 backdrop-blur-xl shadow-none'}`}>
+        <div className={`rounded-3xl md:rounded-[2.5rem] px-8 py-4 flex items-center justify-between border transition-all duration-500 ${
+          scrolled 
+            ? 'bg-white/80 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] border-white/40' 
+            : isDarkBg 
+              ? 'bg-white/10 backdrop-blur-md border-white/10 shadow-none' 
+              : 'bg-white/40 backdrop-blur-xl border-white/40 shadow-none'
+        }`}>
           
           {/* Logo */}
           <Magnetic>
@@ -61,7 +71,7 @@ const Navbar = () => {
                   <div className="p-2"><ShoppingBasket size={28} /></div>
                 )}
               </div>
-              <span className="text-2xl font-black tracking-tighter text-slate-900 hidden lg:block">
+              <span className={`text-2xl font-black tracking-tighter hidden lg:block transition-colors ${isDarkBg ? 'text-white' : 'text-slate-900'}`}>
                 {settings?.storeInfo?.name ? (
                   <>
                     {settings.storeInfo.name.split(' ')[0]}
@@ -77,13 +87,17 @@ const Navbar = () => {
           {/* Desktop Search Bar */}
           <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
             <div className="relative w-full group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" size={18} />
+              <Search className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${isDarkBg ? 'text-white/50 group-focus-within:text-primary' : 'text-slate-400 group-focus-within:text-primary'}`} size={18} />
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search premium groceries..."
-                className="w-full bg-slate-100 border border-slate-200 rounded-full py-2.5 pl-12 pr-10 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-slate-400"
+                className={`w-full rounded-full py-2.5 pl-12 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all ${
+                  isDarkBg 
+                    ? 'bg-white/10 border border-white/10 text-white placeholder:text-white/50 focus:bg-white focus:text-slate-900 focus:border-transparent' 
+                    : 'bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white'
+                }`}
               />
               {searchQuery && (
                 <button 
@@ -99,7 +113,7 @@ const Navbar = () => {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-8">
             <Magnetic>
-              <Link to="/cart" className="relative p-3 text-slate-400 hover:text-primary transition-all group">
+              <Link to="/cart" className={`relative p-3 transition-all group ${isDarkBg ? 'text-white/80 hover:text-primary' : 'text-slate-400 hover:text-primary'}`}>
                 <ShoppingCart size={24} />
                 <motion.span 
                   key={cartCount}
@@ -113,7 +127,7 @@ const Navbar = () => {
             </Magnetic>
 
             <Magnetic>
-              <Link to="/contact" className="text-[11px] font-black text-slate-400 hover:text-primary transition-all uppercase tracking-widest px-2">
+              <Link to="/contact" className={`text-[11px] font-black transition-all uppercase tracking-widest px-2 ${isDarkBg ? 'text-white/80 hover:text-primary' : 'text-slate-400 hover:text-primary'}`}>
                 Contact
               </Link>
             </Magnetic>
@@ -121,11 +135,15 @@ const Navbar = () => {
             {isAuthenticated ? (
               <div className="flex items-center gap-6">
                 <Magnetic>
-                  <Link to="/my-orders" className="flex items-center gap-3 px-5 py-2.5 bg-slate-50 hover:bg-white rounded-2xl border border-slate-100 transition-all group/user shadow-sm">
+                  <Link to="/my-orders" className={`flex items-center gap-3 px-5 py-2.5 rounded-2xl border transition-all group/user shadow-sm ${
+                    isDarkBg 
+                      ? 'bg-white/10 hover:bg-white/20 border-white/10 text-white' 
+                      : 'bg-slate-50 hover:bg-white border-slate-100 text-slate-700'
+                  }`}>
                     <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-xs font-black text-primary group-hover/user:bg-primary group-hover/user:text-white transition-all">
                       {user?.name?.charAt(0).toUpperCase()}
                     </div>
-                    <span className="text-sm font-black text-slate-700 max-w-[100px] truncate">{user?.name}</span>
+                    <span className={`text-sm font-black max-w-[100px] truncate ${isDarkBg ? 'text-white' : 'text-slate-700'}`}>{user?.name}</span>
                   </Link>
                 </Magnetic>
                 <button 
@@ -137,8 +155,8 @@ const Navbar = () => {
               </div>
             ) : (
               <Magnetic>
-                <Link to="/login" className="flex items-center gap-3 text-sm font-black text-slate-400 hover:text-primary transition-all group">
-                  <div className="p-3 rounded-2xl bg-slate-50 group-hover:bg-primary/10 transition-all">
+                <Link to="/login" className={`flex items-center gap-3 text-sm font-black transition-all group ${isDarkBg ? 'text-white/80 hover:text-primary' : 'text-slate-400 hover:text-primary'}`}>
+                  <div className={`p-3 rounded-2xl transition-all ${isDarkBg ? 'bg-white/10 group-hover:bg-primary/20' : 'bg-slate-50 group-hover:bg-primary/10'}`}>
                     <User size={20} />
                   </div>
                   <span className="uppercase tracking-widest text-[11px]">Login</span>
@@ -158,7 +176,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Toggle */}
           <div className="flex md:hidden items-center gap-4">
-            <Link to="/cart" className="relative p-2 text-slate-600">
+            <Link to="/cart" className={`relative p-2 transition-colors ${isDarkBg ? 'text-white' : 'text-slate-600'}`}>
               <ShoppingCart size={22} />
               <motion.span 
                 key={cartCount}
@@ -171,7 +189,7 @@ const Navbar = () => {
             </Link>
             <button 
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-slate-600 hover:text-slate-900 transition-colors"
+              className={`p-2 transition-colors ${isDarkBg ? 'text-white hover:text-white/80' : 'text-slate-600 hover:text-slate-900'}`}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

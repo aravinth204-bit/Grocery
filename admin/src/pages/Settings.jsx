@@ -85,7 +85,7 @@ const Settings = () => {
     payments: { cod: true, razorpay: false, upi: true },
     notifications: { email: true, whatsapp: false, alerts: true },
     seo: { title: '', description: '', keywords: '' },
-    banners: { home: '', offer: '' },
+    banners: { home1: '', home2: '', home3: '', offer: '' },
     theme: { darkMode: true, primaryColor: '#10b981' }
   });
 
@@ -277,11 +277,12 @@ const Settings = () => {
 
         {/* 5. Banner Management */}
         <SettingsCard title="Banner Management" icon={<ImageIcon size={24} />} delay={0.5}>
+          {/* Banner 1 */}
           <div className="flex flex-col gap-4">
-            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Hero Banner</label>
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Hero Banner 1</label>
             <div className="aspect-[21/9] w-full rounded-3xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center gap-2 overflow-hidden relative group shadow-sm">
-              {settings.banners.home ? (
-                <img src={getImageUrl(settings.banners.home)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              {settings.banners.home1 ? (
+                <img src={getImageUrl(settings.banners.home1)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               ) : (
                 <div className="flex flex-col items-center gap-3">
                   <ImageIcon size={32} className="text-slate-200" />
@@ -293,20 +294,20 @@ const Settings = () => {
                  <div className="relative">
                    <input 
                      type="file" 
-                     id="home-banner-upload"
+                     id="home-banner-1-upload"
                      className="hidden"
-                     onChange={(e) => handleImageUpload(e, 'banners', 'home')}
+                     onChange={(e) => handleImageUpload(e, 'banners', 'home1')}
                      accept="image/*"
                    />
                    <label 
-                     htmlFor="home-banner-upload"
+                     htmlFor="home-banner-1-upload"
                      className="bg-white text-slate-900 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-white transition-all shadow-2xl"
                    >
-                     Replace Banner
+                     Replace Banner 1
                    </label>
                  </div>
               </div>
-              {uploadingField === 'banners.home' && (
+              {uploadingField === 'banners.home1' && (
                 <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
                   <Loader2 size={32} className="text-primary animate-spin" />
                 </div>
@@ -314,6 +315,83 @@ const Settings = () => {
             </div>
           </div>
 
+          {/* Banner 2 */}
+          <div className="flex flex-col gap-4">
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Hero Banner 2</label>
+            <div className="aspect-[21/9] w-full rounded-3xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center gap-2 overflow-hidden relative group shadow-sm">
+              {settings.banners.home2 ? (
+                <img src={getImageUrl(settings.banners.home2)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              ) : (
+                <div className="flex flex-col items-center gap-3">
+                  <ImageIcon size={32} className="text-slate-200" />
+                  <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">No Banner Uploaded</span>
+                </div>
+              )}
+              
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                 <div className="relative">
+                   <input 
+                     type="file" 
+                     id="home-banner-2-upload"
+                     className="hidden"
+                     onChange={(e) => handleImageUpload(e, 'banners', 'home2')}
+                     accept="image/*"
+                   />
+                   <label 
+                     htmlFor="home-banner-2-upload"
+                     className="bg-white text-slate-900 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-white transition-all shadow-2xl"
+                   >
+                     Replace Banner 2
+                   </label>
+                 </div>
+              </div>
+              {uploadingField === 'banners.home2' && (
+                <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                  <Loader2 size={32} className="text-primary animate-spin" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Banner 3 */}
+          <div className="flex flex-col gap-4">
+            <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Home Hero Banner 3</label>
+            <div className="aspect-[21/9] w-full rounded-3xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center gap-2 overflow-hidden relative group shadow-sm">
+              {settings.banners.home3 ? (
+                <img src={getImageUrl(settings.banners.home3)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              ) : (
+                <div className="flex flex-col items-center gap-3">
+                  <ImageIcon size={32} className="text-slate-200" />
+                  <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">No Banner Uploaded</span>
+                </div>
+              )}
+              
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                 <div className="relative">
+                   <input 
+                     type="file" 
+                     id="home-banner-3-upload"
+                     className="hidden"
+                     onChange={(e) => handleImageUpload(e, 'banners', 'home3')}
+                     accept="image/*"
+                   />
+                   <label 
+                     htmlFor="home-banner-3-upload"
+                     className="bg-white text-slate-900 px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest cursor-pointer hover:bg-primary hover:text-white transition-all shadow-2xl"
+                   >
+                     Replace Banner 3
+                   </label>
+                 </div>
+              </div>
+              {uploadingField === 'banners.home3' && (
+                <div className="absolute inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center">
+                  <Loader2 size={32} className="text-primary animate-spin" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Promotion Banner */}
           <div className="flex flex-col gap-4">
             <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Promotion Banner</label>
             <div className="aspect-[21/9] w-full rounded-3xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center gap-2 overflow-hidden relative group shadow-sm">
