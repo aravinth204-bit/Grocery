@@ -9,10 +9,11 @@ import {
   BarChart2,
   Settings,
   LogOut,
-  Store,
-  Bell
+  Bell,
+  UserCircle
 } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
+import Logo from './Logo';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { logoutAdmin } = useContext(AuthContext);
@@ -31,6 +32,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     { path: '/customers', name: 'Customers', icon: <Users size={20} />, color: 'text-pink-500', bg: 'hover:bg-pink-50' },
     { path: '/analytics', name: 'Analytics', icon: <BarChart2 size={20} />, color: 'text-indigo-500', bg: 'hover:bg-indigo-50' },
     { path: '/settings', name: 'Settings', icon: <Settings size={20} />, color: 'text-slate-600', bg: 'hover:bg-slate-100' },
+    { path: '/profile', name: 'My Profile', icon: <UserCircle size={20} />, color: 'text-emerald-600', bg: 'hover:bg-emerald-50' },
   ];
 
   return (
@@ -49,19 +51,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           }`}
       >
         {/* Logo */}
-        <div className="p-10 pb-6">
-          <div className="flex items-center gap-4 text-slate-900 dark:text-slate-100 group cursor-pointer">
-            <motion.div 
-              whileHover={{ rotate: 12, scale: 1.1 }}
-              className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center shadow-lg shadow-primary/20 transition-all"
-            >
-              <Store size={24} className="text-white" />
-            </motion.div>
-            <div>
-              <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-none">FreshCart</h1>
-              <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mt-1">Admin Elite</p>
-            </div>
-          </div>
+        <div className="p-8 pb-6">
+          <Logo size={44} showText={true} showBadge={true} />
         </div>
 
         {/* Navigation */}

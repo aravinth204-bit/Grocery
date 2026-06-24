@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Menu, Search, Mail, Sun, Moon } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NotificationDropdown from './NotificationDropdown';
 import { useTheme } from '../context/ThemeContext';
+import { AuthContext } from '../context/AuthContext';
+import { getImageUrl } from '../utils/imageUrl';
 
 const TopNav = ({ setSidebarOpen }) => {
   const { isDarkMode, toggleTheme } = useTheme();
+  const { adminInfo } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const avatarSrc = adminInfo?.avatar ? getImageUrl(adminInfo.avatar) : null;
+  const initials = adminInfo?.name?.charAt(0)?.toUpperCase() || 'A';
 
   return (
     <header className="h-24 bg-white/60 dark:bg-[#0f172a]/60 backdrop-blur-2xl border-b border-slate-100/50 dark:border-white/5 flex items-center justify-between px-6 md:px-10 z-[50] transition-all duration-300">
@@ -59,14 +66,23 @@ const TopNav = ({ setSidebarOpen }) => {
         {/* Admin Profile Mini */}
         <motion.div 
           whileHover={{ scale: 1.02 }}
+          onClick={() => navigate('/profile')}
           className="hidden sm:flex items-center gap-4 pl-6 border-l border-slate-100 dark:border-white/5 cursor-pointer group"
         >
           <div className="text-right">
-            <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] leading-none mb-1.5">Premium Admin</p>
-            <p className="text-sm font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">Aravinth Thala</p>
+            <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] leading-none mb-1.5">Admin Elite</p>
+            <p className="text-sm font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors">
+              {adminInfo?.name || 'Admin'}
+            </p>
           </div>
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 border border-primary/20 flex items-center justify-center text-primary font-black text-lg shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10 transition-all">
-            A
+          <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10 group-hover:border-primary/40 transition-all flex-shrink-0">
+            {avatarSrc ? (
+              <img src={avatarSrc} alt="avatar" className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center text-primary font-black text-lg">
+                {initials}
+              </div>
+            )}
           </div>
         </motion.div>
       </div>

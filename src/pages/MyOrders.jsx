@@ -4,8 +4,10 @@ import { Package, Calendar, ChevronRight, Clock, CheckCircle2, Truck, ShoppingBa
 import { Link } from 'react-router-dom';
 import { getMyOrders } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import usePageTitle from '../hooks/usePageTitle';
 
 const MyOrders = () => {
+  usePageTitle('My Orders');
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);

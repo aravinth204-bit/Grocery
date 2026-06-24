@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Search, Menu, X, User, ShoppingBasket } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, User } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import useCart from '../hooks/useCart';
 import { useSearch } from '../context/SearchContext';
 import { useAuth } from '../context/AuthContext';
 import { useSettings } from '../context/SettingsContext';
 import Magnetic from './Magnetic';
+import Logo from './Logo';
 
 const Navbar = () => {
   const { cartCount } = useCart();
@@ -16,6 +17,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const searchRef = React.useRef(null);
   const location = useLocation();
   
   const isHome = location.pathname === '/';
@@ -31,6 +34,19 @@ const Navbar = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Ctrl+K → focus search
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+      if (e.key === 'Escape') searchRef.current?.blur();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   // Auto-scroll to products when searching
@@ -63,24 +79,8 @@ const Navbar = () => {
           
           {/* Logo */}
           <Magnetic>
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="p-1 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 overflow-hidden flex items-center justify-center shadow-sm">
-                {settings?.storeInfo?.logo ? (
-                  <img src={settings.storeInfo.logo} alt="Logo" className="w-12 h-12 object-cover" />
-                ) : (
-                  <div className="p-2"><ShoppingBasket size={28} /></div>
-                )}
-              </div>
-              <span className={`text-2xl font-black tracking-tighter hidden lg:block transition-colors ${isDarkBg ? 'text-white' : 'text-slate-900'}`}>
-                {settings?.storeInfo?.name ? (
-                  <>
-                    {settings.storeInfo.name.split(' ')[0]}
-                    <span className="text-primary"> {settings.storeInfo.name.split(' ').slice(1).join(' ')}</span>
-                  </>
-                ) : (
-                  <>Fresh<span className="text-primary">Cart</span></>
-                )}
-              </span>
+            <Link to="/" className="flex items-center">
+              <Logo showText={true} textLight={isDarkBg} size={40} />
             </Link>
           </Magnetic>
 
@@ -89,16 +89,24 @@ const Navbar = () => {
             <div className="relative w-full group">
               <Search className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors ${isDarkBg ? 'text-white/50 group-focus-within:text-primary' : 'text-slate-400 group-focus-within:text-primary'}`} size={18} />
               <input 
+                ref={searchRef}
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search premium groceries..."
-                className={`w-full rounded-full py-2.5 pl-12 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all ${
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setSearchFocused(false)}
+                placeholder="Search groceries... (Ctrl+K)"
+                className={`w-full rounded-full py-2.5 pl-12 pr-16 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all ${
                   isDarkBg 
                     ? 'bg-white/10 border border-white/10 text-white placeholder:text-white/50 focus:bg-white focus:text-slate-900 focus:border-transparent' 
                     : 'bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white'
                 }`}
               />
+              {!searchQuery && !searchFocused && (
+                <kbd className={`absolute right-4 top-1/2 -translate-y-1/2 text-[9px] font-black px-2 py-0.5 rounded-lg border tracking-widest pointer-events-none ${isDarkBg ? 'bg-white/10 border-white/10 text-white/40' : 'bg-slate-200 border-slate-300 text-slate-400'}`}>
+                  ⌘K
+                </kbd>
+              )}
               {searchQuery && (
                 <button 
                   onClick={() => setSearchQuery("")}
@@ -176,6 +184,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Toggle */}
           <div className="flex md:hidden items-center gap-4">
+            <Logo size={32} showText={false} />
             <Link to="/cart" className={`relative p-2 transition-colors ${isDarkBg ? 'text-white' : 'text-slate-600'}`}>
               <ShoppingCart size={22} />
               <motion.span 

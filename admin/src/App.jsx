@@ -9,6 +9,7 @@ import Analytics from './pages/Analytics';
 import Settings from './pages/Settings';
 import Notifications from './pages/Notifications';
 import Support from './pages/Support';
+import Profile from './pages/Profile';
 import Login from './pages/Login';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         <Route path="settings" element={<Settings />} />
         <Route path="notifications" element={<Notifications />} />
         <Route path="support" element={<Support />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>
   );

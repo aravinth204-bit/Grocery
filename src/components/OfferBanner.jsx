@@ -1,8 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Tag, ArrowRight } from 'lucide-react';
+import { Tag, ArrowRight, Clock } from 'lucide-react';
 import { getImageUrl } from '../utils/imageUrl';
 import Magnetic from './Magnetic';
+
+// Fixed end time: 2 days from first load, stored in session
+const getEndTime = () => {
+  const stored = sessionStorage.getItem('offerEndTime');
+  if (stored) return parseInt(stored);
+  const end = Date.now() + 2 * 24 * 60 * 60 * 1000;
+  sessionStorage.setItem('offerEndTime', end.toString());
+  return end;
+};
+
+const Countdown = () => {
+  const [timeLeft, setTimeLeft] = useState({ h: 0, m: 0, s: 0 });
+
+  useEffect(() => {
+    const endTime = getEndTime();
+    const tick = () => {
+      const diff = Math.max(0, endTime - Date.now());
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      setTimeLeft({ h, m, s });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const pad = (n) => String(n).padStart(2, '0');
+
+  return (
+    <div className="flex items-center gap-3">
+      <Clock size={16} className="text-primary flex-shrink-0" />
+      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Offer ends in:</span>
+      <div className="flex items-center gap-1.5">
+        {[{ v: timeLeft.h, l: 'H' }, { v: timeLeft.m, l: 'M' }, { v: timeLeft.s, l: 'S' }].map(({ v, l }, i) => (
+          <React.Fragment key={l}>
+            <div className="flex flex-col items-center bg-slate-900 rounded-xl px-3 py-1.5 min-w-[40px]">
+              <span className="text-base font-black text-white leading-none tabular-nums">{pad(v)}</span>
+              <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest mt-0.5">{l}</span>
+            </div>
+            {i < 2 && <span className="text-slate-400 font-black text-sm">:</span>}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const OfferBanner = () => {
   return (
@@ -55,8 +102,10 @@ const OfferBanner = () => {
               </div>
               
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest px-4 md:px-0">*Elite delivery service available in select regions</p>
+              <div className="mt-2">
+                <Countdown />
+              </div>
             </div>
-
             <div className="hidden lg:flex justify-center relative">
                <motion.div
                  animate={{ rotate: [0, 3, 0], y: [0, -10, 0] }}

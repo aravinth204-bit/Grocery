@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, MessageSquare, Clock, CheckCircle2, Loader2 } from 'lucide-react';
 import axios from 'axios';
 import { useToast } from '../context/ToastContext';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Contact = () => {
+  usePageTitle('Contact Us');
   const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({

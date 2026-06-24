@@ -54,9 +54,10 @@ const ProductsSection = () => {
 
   const filteredProducts = products.filter(p => {
     const matchesCategory = activeCategory === "All" || p.category === activeCategory;
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = 
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      p.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.description?.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -148,11 +149,11 @@ const ProductsSection = () => {
 
         {/* Products Grid */}
         <motion.div 
+          key={activeCategory}
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
+          animate="visible"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4"
         >
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((product) => (

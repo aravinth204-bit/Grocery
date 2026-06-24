@@ -112,6 +112,7 @@ const Hero = () => {
             </div>
           </motion.div>
         </div>
+
       </div>
 
       {/* Slider Indicators */}

@@ -29,6 +29,10 @@ API.interceptors.request.use((config) => {
 export const getDashboardStats = () => API.get('/admin/stats');
 export const getCustomers = () => API.get('/admin/customers');
 
+// Profile API
+export const getAdminProfile = () => API.get('/auth/me');
+export const updateAdminProfile = (data) => API.put('/auth/profile', data);
+
 // Products API
 export const getProducts = () => API.get('/products');
 export const createProduct = (productData) => API.post('/products', productData);

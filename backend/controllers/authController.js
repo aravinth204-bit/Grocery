@@ -72,6 +72,69 @@ export const getMe = async (req, res) => {
   }
 };
 
+// @desc    Update admin profile
+// @route   PUT /api/auth/profile
+// @access  Private
+export const updateProfile = async (req, res) => {
+  try {
+    const { name, email, mobile, bio, phone, avatar, currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.user.id).select('+password');
+    if (!user) return res.status(404).json({ success: false, error: 'User not found' });
+
+    // Update basic fields only if changed
+    if (name) user.name = name;
+    if (email && email !== user.email) user.email = email;
+    // Only update mobile if it's different (avoid unique constraint re-save)
+    if (mobile && mobile !== user.mobile) user.mobile = mobile;
+    if (bio !== undefined) user.bio = bio;
+    if (phone !== undefined) user.phone = phone;
+    if (avatar !== undefined) user.avatar = avatar;
+
+    // Password change
+    if (currentPassword && newPassword) {
+      const isMatch = await user.matchPassword(currentPassword);
+      if (!isMatch) {
+        return res.status(400).json({ success: false, error: 'Current password is incorrect' });
+      }
+      user.password = newPassword;
+    }
+
+    // Use findByIdAndUpdate for non-password fields to skip pre-save hook issues
+    // But if password is changing, we need .save() for the pre-save hash hook
+    if (currentPassword && newPassword) {
+      await user.save();
+    } else {
+      await User.findByIdAndUpdate(req.user.id, {
+        name: user.name,
+        email: user.email,
+        mobile: user.mobile,
+        bio: user.bio,
+        phone: user.phone,
+        avatar: user.avatar,
+      }, { new: true, runValidators: false });
+    }
+
+    const updatedUser = await User.findById(req.user.id);
+
+    res.status(200).json({
+      success: true,
+      user: {
+        id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        mobile: updatedUser.mobile,
+        role: updatedUser.role,
+        avatar: updatedUser.avatar,
+        bio: updatedUser.bio,
+        phone: updatedUser.phone,
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
 // Helper to get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token

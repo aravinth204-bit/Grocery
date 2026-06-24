@@ -7,6 +7,7 @@ import { getImageUrl } from '../utils/imageUrl';
 import useCart from '../hooks/useCart';
 import { useToast } from '../context/ToastContext';
 import ProductCard from '../components/ProductCard';
+import usePageTitle from '../hooks/usePageTitle';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -18,6 +19,8 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+
+  usePageTitle(product?.name || 'Product Details');
 
   useEffect(() => {
     const getProductData = async () => {

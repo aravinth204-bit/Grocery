@@ -6,19 +6,23 @@ import useCart from '../hooks/useCart';
 import { useToast } from '../context/ToastContext';
 import { useAuth } from '../context/AuthContext';
 import { createOrder } from '../services/api';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Checkout = () => {
+  usePageTitle('Checkout');
   const navigate = useNavigate();
   const { cart, cartTotal, clearCart, isEmpty } = useCart();
   const { showToast } = useToast();
   const { isAuthenticated, user } = useAuth();
   
   const [shippingData, setShippingData] = useState({
-    name: user?.name || '',
+    fullName: user?.name || '',
     mobile: user?.mobile || '',
+    email: user?.email || '',
     address: '',
     city: '',
-    pincode: ''
+    state: '',
+    pincode: '',
   });
 
   const [paymentMethod, setPaymentMethod] = useState('cod');
@@ -57,10 +61,13 @@ const Checkout = () => {
           product: item.id // This is the MongoDB _id
         })),
         shippingAddress: {
+          fullName: shippingData.fullName,
+          mobile: shippingData.mobile,
+          email: shippingData.email,
           address: shippingData.address,
           city: shippingData.city,
+          state: shippingData.state,
           pincode: shippingData.pincode,
-          mobile: shippingData.mobile
         },
         paymentMethod,
         totalPrice: grandTotal
@@ -112,60 +119,68 @@ const Checkout = () => {
                 onSubmit={handlePlaceOrder}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6"
               >
+                {/* Full Name */}
                 <div className="sm:col-span-2 relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   <input 
-                    type="text" 
-                    name="name"
-                    required
-                    value={shippingData.name}
-                    onChange={handleInputChange}
+                    type="text" name="fullName" required
+                    value={shippingData.fullName} onChange={handleInputChange}
                     placeholder="Full Name"
                     className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
+                {/* Mobile */}
                 <div className="relative">
                   <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                   <input 
-                    type="tel" 
-                    name="mobile"
-                    required
-                    value={shippingData.mobile}
-                    onChange={handleInputChange}
+                    type="tel" name="mobile" required
+                    value={shippingData.mobile} onChange={handleInputChange}
                     placeholder="Mobile Number"
                     className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
+                {/* Email */}
                 <div className="relative">
                   <input 
-                    type="text" 
-                    name="pincode"
-                    required
-                    value={shippingData.pincode}
-                    onChange={handleInputChange}
-                    placeholder="Pincode"
+                    type="email" name="email"
+                    value={shippingData.email} onChange={handleInputChange}
+                    placeholder="Email Address (optional)"
                     className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
+                {/* Address */}
                 <div className="sm:col-span-2 relative">
                   <input 
-                    type="text" 
-                    name="address"
-                    required
-                    value={shippingData.address}
-                    onChange={handleInputChange}
-                    placeholder="Complete Address (Street, Building, Flat No)"
+                    type="text" name="address" required
+                    value={shippingData.address} onChange={handleInputChange}
+                    placeholder="Street Address, Building, Flat No"
                     className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>
-                <div className="sm:col-span-2 relative">
+                {/* City */}
+                <div className="relative">
                   <input 
-                    type="text" 
-                    name="city"
-                    required
-                    value={shippingData.city}
-                    onChange={handleInputChange}
+                    type="text" name="city" required
+                    value={shippingData.city} onChange={handleInputChange}
                     placeholder="City"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
+                  />
+                </div>
+                {/* State */}
+                <div className="relative">
+                  <input 
+                    type="text" name="state"
+                    value={shippingData.state} onChange={handleInputChange}
+                    placeholder="State"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
+                  />
+                </div>
+                {/* Pincode */}
+                <div className="relative">
+                  <input 
+                    type="text" name="pincode" required
+                    value={shippingData.pincode} onChange={handleInputChange}
+                    placeholder="Pincode / ZIP"
                     className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-4 px-4 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/10 transition-all"
                   />
                 </div>

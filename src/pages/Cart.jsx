@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Truck, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useCart from '../hooks/useCart';
+import usePageTitle from '../hooks/usePageTitle';
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, cartTotal, isEmpty } = useCart();
+  usePageTitle('My Cart');
   const deliveryFee = cartTotal > 50 ? 0 : 5.00;
   const finalTotal = cartTotal + deliveryFee;
 
@@ -13,20 +15,42 @@ const Cart = () => {
     return (
       <div className="min-h-screen pt-32 pb-20 flex flex-col items-center justify-center px-6">
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center"
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center max-w-md"
         >
-          <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-8 border border-slate-200/50">
-            <ShoppingBag size={48} className="text-slate-400" />
+          {/* Animated cart illustration */}
+          <div className="relative mx-auto w-48 h-48 mb-10">
+            <div className="absolute inset-0 bg-primary/10 rounded-full blur-2xl" />
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative flex items-center justify-center w-full h-full"
+            >
+              <img src="/fruits/bowl.png" alt="empty cart" className="w-36 h-36 object-contain drop-shadow-2xl opacity-60" />
+            </motion.div>
+            <motion.div
+              animate={{ scale: [1, 1.15, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute top-4 right-4 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center"
+            >
+              <ShoppingBag size={20} className="text-primary" />
+            </motion.div>
           </div>
-          <h2 className="text-3xl font-bold mb-4 text-slate-800">Your cart is empty</h2>
-          <p className="text-slate-500 mb-8 max-w-sm mx-auto">
-            Looks like you haven't added anything to your premium grocery basket yet.
+
+          <h2 className="text-4xl font-black mb-3 text-slate-800 tracking-tight">Your cart is <span className="text-gradient">empty</span></h2>
+          <p className="text-slate-500 mb-10 font-medium leading-relaxed">
+            Looks like you haven't added anything yet. Explore our premium organic collection!
           </p>
-          <Link to="/" className="btn-gradient px-10 py-4 rounded-2xl font-bold text-white inline-flex items-center gap-2">
-            Go Shopping <ArrowRight size={20} />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/" className="btn-gradient px-10 py-4 rounded-2xl font-black text-white inline-flex items-center gap-2 shadow-xl shadow-primary/20 justify-center">
+              Start Shopping <ArrowRight size={18} />
+            </Link>
+            <Link to="/#categories-section" className="px-10 py-4 rounded-2xl font-black text-slate-600 border border-slate-200 bg-white hover:border-primary/30 hover:text-primary transition-all inline-flex items-center gap-2 justify-center">
+              Browse Categories
+            </Link>
+          </div>
         </motion.div>
       </div>
     );

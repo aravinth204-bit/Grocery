@@ -7,6 +7,7 @@ import { SearchProvider } from './context/SearchContext';
 import { AuthProvider } from './context/AuthContext';
 import { SettingsProvider } from './context/SettingsContext';
 import Navbar from './components/Navbar';
+import BackToTop from './components/BackToTop';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import ProductDetails from './pages/ProductDetails';
@@ -32,20 +33,25 @@ const PageTransition = ({ children }) => (
 
 const AnimatedRoutes = () => {
   const location = useLocation();
+  const hideNavbar = ['/login', '/register'].includes(location.pathname);
+
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-        <Route path="/cart" element={<PageTransition><Cart /></PageTransition>} />
-        <Route path="/product/:id" element={<PageTransition><ProductDetails /></PageTransition>} />
-        <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
-        <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
-        <Route path="/checkout" element={<PageTransition><Checkout /></PageTransition>} />
-        <Route path="/order-success/:id" element={<PageTransition><OrderSuccess /></PageTransition>} />
-        <Route path="/my-orders" element={<PageTransition><MyOrders /></PageTransition>} />
-        <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
-      </Routes>
-    </AnimatePresence>
+    <>
+      {!hideNavbar && <Navbar />}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+          <Route path="/cart" element={<PageTransition><Cart /></PageTransition>} />
+          <Route path="/product/:id" element={<PageTransition><ProductDetails /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+          <Route path="/register" element={<PageTransition><Register /></PageTransition>} />
+          <Route path="/checkout" element={<PageTransition><Checkout /></PageTransition>} />
+          <Route path="/order-success/:id" element={<PageTransition><OrderSuccess /></PageTransition>} />
+          <Route path="/my-orders" element={<PageTransition><MyOrders /></PageTransition>} />
+          <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+        </Routes>
+      </AnimatePresence>
+    </>
   );
 };
 
@@ -58,8 +64,8 @@ function App() {
             <CartProvider>
               <Router>
                 <CustomCursor />
+                <BackToTop />
                 <div className="min-h-screen bg-slate-50 mesh-gradient text-slate-900 selection:bg-primary/20 selection:text-primary">
-                  <Navbar />
                   <main>
                     <AnimatedRoutes />
                   </main>

@@ -1,10 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Background circle -->
   <circle cx="100" cy="100" r="100" fill="url(#bgGrad)"/>
+  
+  <!-- Cart base -->
   <path d="M48 68h12l16 52h56l12-40H72" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Cart wheels -->
   <circle cx="88" cy="132" r="7" fill="white"/>
   <circle cx="128" cy="132" r="7" fill="white"/>
+  
+  <!-- Leaf on top -->
   <path d="M116 44 C116 44 140 38 148 58 C148 58 132 62 120 52 C124 64 122 76 110 80 C110 80 108 60 116 44Z" fill="white" opacity="0.95"/>
-  <path d="M116 44 C113 56 111 68 110 80" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Leaf vein -->
+  <path d="M116 44 C113 56 111 68 110 80" stroke="url(#bgGrad)" stroke-width="1.5" stroke-linecap="round"/>
+
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#10b981"/>

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import API from '../services/api';
+import API, { updateAdminProfile, uploadImage } from '../services/api';
 
 export const AuthContext = createContext();
 
@@ -18,16 +18,11 @@ export const AuthProvider = ({ children }) => {
 
   const loginAdmin = async (email, password) => {
     try {
-      const config = {
-        headers: { 'Content-Type': 'application/json' },
-      };
-      // Uses the same login endpoint from backend
-      const { data } = await API.post('/auth/login', { email, password }, config);
-      
+      const { data } = await API.post('/auth/login', { email, password });
       if (data.user && data.user.role === 'admin') {
         setAdminInfo(data.user);
         localStorage.setItem('adminInfo', JSON.stringify(data.user));
-        localStorage.setItem('adminToken', data.token); // Store token separately for API service
+        localStorage.setItem('adminToken', data.token);
         return { success: true };
       } else {
         return { success: false, message: 'Not authorized as an admin' };
@@ -35,10 +30,22 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return { 
         success: false, 
-        message: error.response && error.response.data.error 
-          ? error.response.data.error 
-          : error.message 
+        message: error.response?.data?.error || error.message 
       };
+    }
+  };
+
+  const updateProfile = async (profileData) => {
+    try {
+      const { data } = await updateAdminProfile(profileData);
+      if (data.success) {
+        const updated = { ...adminInfo, ...data.user };
+        setAdminInfo(updated);
+        localStorage.setItem('adminInfo', JSON.stringify(updated));
+      }
+      return { success: data.success };
+    } catch (error) {
+      return { success: false, message: error.response?.data?.error || error.message };
     }
   };
 
@@ -49,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ adminInfo, loginAdmin, logoutAdmin, loading }}>
+    <AuthContext.Provider value={{ adminInfo, loginAdmin, logoutAdmin, updateProfile, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,15 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Apple, Milk, Coffee, Carrot, ChevronRight, Cookie } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Magnetic from './Magnetic';
 import { useSearch } from '../context/SearchContext';
 
 const categories = [
-  { name: "Vegetables", icon: <Carrot size={26} />, text: "Fresh from organic elite local farms.", count: "120+ items" },
-  { name: "Fruits", icon: <Apple size={26} />, text: "Premium organic hand-picked selection.", count: "80+ items" },
-  { name: "Dairy", icon: <Milk size={26} />, text: "Pure farm-fresh, organic milk & cheese.", count: "45+ items" },
-  { name: "Snacks", icon: <Cookie size={26} />, text: "Healthy, wholesome morning fresh snacks.", count: "60+ items" },
-  { name: "Drinks", icon: <Coffee size={26} />, text: "Artisan roasted coffee & natural juices.", count: "35+ items" },
+  { name: "Vegetables", image: "/fruits/avocado.png", text: "Fresh from organic elite local farms.", count: "120+ items", color: "from-green-50 to-white", hover: "hover:border-green-200 hover:shadow-green-100/50" },
+  { name: "Fruits", image: "/fruits/apple.png", text: "Premium organic hand-picked selection.", count: "80+ items", color: "from-red-50 to-white", hover: "hover:border-red-200 hover:shadow-red-100/50" },
+  { name: "Dairy", image: "/fruits/glass_bowl.png", text: "Pure farm-fresh, organic milk & cheese.", count: "45+ items", color: "from-yellow-50 to-white", hover: "hover:border-yellow-200 hover:shadow-yellow-100/50" },
+  { name: "Snacks", image: "/fruits/snacks.svg", text: "Healthy, wholesome morning fresh snacks.", count: "60+ items", color: "from-orange-50 to-white", hover: "hover:border-orange-200 hover:shadow-orange-100/50" },
+  { name: "Drinks", image: "/fruits/lemon.png", text: "Artisan roasted coffee & natural juices.", count: "35+ items", color: "from-lime-50 to-white", hover: "hover:border-lime-200 hover:shadow-lime-100/50" },
 ];
 
 const containerVariants = {
@@ -83,22 +83,28 @@ const CategoriesSection = () => {
               variants={itemVariants}
               whileHover={{ y: -8 }}
               onClick={() => handleCategoryClick(cat.name)}
-              className="relative group overflow-hidden bg-gradient-to-b from-slate-50 to-white hover:from-white hover:to-slate-50/50 border border-slate-200/60 rounded-[2rem] p-8 flex flex-col gap-6 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-[0_25px_60px_rgba(16,185,129,0.08)] hover:border-primary/20"
+              className={`relative group overflow-hidden bg-gradient-to-b ${cat.color} border border-slate-200/60 rounded-[2rem] p-8 flex flex-col gap-4 cursor-pointer transition-all duration-300 shadow-sm hover:shadow-[0_25px_60px_rgba(0,0,0,0.08)] ${cat.hover} hover:border-opacity-100`}
             >
-              {/* Top Row: Icon and Item Count */}
-              <div className="flex justify-between items-center w-full">
-                <Magnetic>
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-inner">
-                    {cat.icon}
-                  </div>
-                </Magnetic>
+              {/* Image */}
+              <div className="w-full flex justify-center items-center h-28">
+                <motion.img
+                  src={cat.image}
+                  alt={cat.name}
+                  whileHover={{ scale: 1.1, rotate: -3 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                  className="h-24 w-24 object-contain drop-shadow-xl"
+                />
+              </div>
+
+              {/* Count badge */}
+              <div className="flex justify-end">
                 <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest bg-slate-100 group-hover:bg-primary/15 group-hover:text-primary px-3 py-1.5 rounded-full transition-all">
                   {cat.count}
                 </span>
               </div>
 
-              {/* Bottom Content: Title and Description */}
-              <div className="flex flex-col gap-2.5 mt-2">
+              {/* Bottom Content */}
+              <div className="flex flex-col gap-2">
                 <h3 className="text-lg font-extrabold text-slate-800 group-hover:text-primary transition-colors tracking-tight">
                   {cat.name}
                 </h3>
@@ -108,7 +114,7 @@ const CategoriesSection = () => {
               </div>
 
               {/* Action Link */}
-              <div className="flex items-center gap-2 text-xs font-black text-primary tracking-widest uppercase mt-4">
+              <div className="flex items-center gap-2 text-xs font-black text-primary tracking-widest uppercase mt-2">
                 <span>Explore</span>
                 <ChevronRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
               </div>

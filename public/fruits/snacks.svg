@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Bowl base -->
+  <ellipse cx="100" cy="145" rx="62" ry="14" fill="#f97316" opacity="0.18"/>
+  
+  <!-- Bowl body -->
+  <path d="M42 100 Q42 148 100 150 Q158 148 158 100 Z" fill="url(#bowlGrad)"/>
+  
+  <!-- Bowl rim -->
+  <ellipse cx="100" cy="100" rx="58" ry="13" fill="url(#rimGrad)"/>
+
+  <!-- Popcorn pieces -->
+  <!-- piece 1 -->
+  <ellipse cx="80" cy="88" rx="13" ry="10" fill="#fde68a" transform="rotate(-15 80 88)"/>
+  <ellipse cx="80" cy="88" rx="9" ry="7" fill="#fef3c7" transform="rotate(-15 80 88)"/>
+  
+  <!-- piece 2 -->
+  <ellipse cx="105" cy="82" rx="14" ry="10" fill="#fcd34d" transform="rotate(10 105 82)"/>
+  <ellipse cx="105" cy="82" rx="9" ry="6" fill="#fef9c3" transform="rotate(10 105 82)"/>
+
+  <!-- piece 3 -->
+  <ellipse cx="128" cy="90" rx="12" ry="9" fill="#fde68a" transform="rotate(-8 128 90)"/>
+  <ellipse cx="128" cy="90" rx="8" ry="6" fill="#fef3c7" transform="rotate(-8 128 90)"/>
+
+  <!-- piece 4 - top center floating -->
+  <ellipse cx="100" cy="68" rx="15" ry="11" fill="#fcd34d" transform="rotate(5 100 68)"/>
+  <ellipse cx="100" cy="68" rx="10" ry="7" fill="#fef9c3" transform="rotate(5 100 68)"/>
+
+  <!-- piece 5 left floating -->
+  <ellipse cx="70" cy="72" rx="11" ry="8" fill="#fde68a" transform="rotate(-20 70 72)"/>
+  <ellipse cx="70" cy="72" rx="7" ry="5" fill="#fef3c7" transform="rotate(-20 70 72)"/>
+
+  <!-- piece 6 right floating -->
+  <ellipse cx="132" cy="70" rx="11" ry="8" fill="#fbbf24" transform="rotate(18 132 70)"/>
+  <ellipse cx="132" cy="70" rx="7" ry="5" fill="#fef3c7" transform="rotate(18 132 70)"/>
+
+  <!-- small scattered dots for crunch effect -->
+  <circle cx="88" cy="60" r="3" fill="#f59e0b" opacity="0.7"/>
+  <circle cx="115" cy="58" r="2.5" fill="#fbbf24" opacity="0.7"/>
+  <circle cx="60" cy="85" r="2" fill="#f59e0b" opacity="0.5"/>
+  <circle cx="145" cy="82" r="2" fill="#fbbf24" opacity="0.5"/>
+
+  <defs>
+    <linearGradient id="bowlGrad" x1="42" y1="100" x2="158" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+    <linearGradient id="rimGrad" x1="42" y1="95" x2="158" y2="105" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fdba74"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+</svg>

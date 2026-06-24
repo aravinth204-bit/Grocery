@@ -159,7 +159,10 @@ const Orders = () => {
                           </div>
                           <div>
                             <p className="text-sm font-bold text-slate-900 mb-0.5">{order.user?.name || 'Guest User'}</p>
-                            <p className="text-[10px] text-slate-400 font-medium tracking-tight">{order.shippingAddress?.city}, {order.shippingAddress?.pincode}</p>
+                            <p className="text-[10px] text-slate-400 font-medium tracking-tight">
+                              📍 {order.shippingAddress?.city}{order.shippingAddress?.state ? `, ${order.shippingAddress.state}` : ''} — {order.shippingAddress?.pincode}
+                            </p>
+                            <p className="text-[10px] text-slate-400 font-medium">📞 {order.shippingAddress?.mobile || '—'}</p>
                           </div>
                         </div>
                       </td>
@@ -391,7 +394,7 @@ const Orders = () => {
                           <p className="text-base font-black text-slate-900 tracking-tight leading-tight">
                             {selectedOrder.shippingAddress?.fullName || selectedOrder.user?.name || 'Guest User'}
                           </p>
-                          <p className="text-xs font-bold text-slate-400">{selectedOrder.user?.email || 'No Email'}</p>
+                          <p className="text-xs font-bold text-slate-400">{selectedOrder.shippingAddress?.email || selectedOrder.user?.email || '—'}</p>
                         </div>
                       </div>
                       
@@ -417,12 +420,21 @@ const Orders = () => {
                         <p className="text-sm font-black text-slate-900">{selectedOrder.shippingAddress?.fullName}</p>
                         <p className="text-sm text-slate-600 leading-relaxed">
                           {selectedOrder.shippingAddress?.address},<br/>
-                          {selectedOrder.shippingAddress?.city},<br/>
-                          {selectedOrder.shippingAddress?.state} - {selectedOrder.shippingAddress?.pincode}
+                          {selectedOrder.shippingAddress?.city}
+                          {selectedOrder.shippingAddress?.state ? `, ${selectedOrder.shippingAddress.state}` : ''}
+                          {' - '}{selectedOrder.shippingAddress?.pincode}
                         </p>
-                        <div className="pt-4 mt-4 border-t border-slate-100">
-                          <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Contact Number</p>
-                          <p className="text-sm font-black text-primary tracking-widest">{selectedOrder.shippingAddress?.mobileNumber}</p>
+                        <div className="pt-4 mt-4 border-t border-slate-100 space-y-2">
+                          <div>
+                            <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Mobile</p>
+                            <p className="text-sm font-black text-primary tracking-widest">{selectedOrder.shippingAddress?.mobile || '—'}</p>
+                          </div>
+                          {selectedOrder.shippingAddress?.email && (
+                            <div>
+                              <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Email</p>
+                              <p className="text-sm font-bold text-slate-700">{selectedOrder.shippingAddress.email}</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
